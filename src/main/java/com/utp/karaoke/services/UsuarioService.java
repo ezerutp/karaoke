@@ -13,23 +13,8 @@ public class UsuarioService {
     }
 
     public boolean registrarUsuario(Usuario usuario) {
-        // Validaciones básicas
-        if (usuario == null) return false;
-        if (usuario.getNombre() == null || usuario.getNombre().isEmpty()) return false;
-        if (usuario.getCorreo() == null || usuario.getCorreo().isEmpty()) return false;
-        if (usuario.getPass() == null || usuario.getPass().isEmpty()) return false;
-        if (usuario.getRol() == null || usuario.getRol().isEmpty()) return false;
-
-        // Validación de correo simple
-        if (!usuario.getCorreo().contains("@")) return false;
-
-        // Validación de longitud de contraseña
-        if (usuario.getPass().length() < 6) return false;
-
-        // Validacion de que no exista un usuario con el mismo correo
         Usuario tempUsuario = usuarioRepository.buscarPorCorreo(usuario.getCorreo());
         if (tempUsuario != null) { return false; }
-
         return usuarioRepository.guardar(usuario);
     }
 

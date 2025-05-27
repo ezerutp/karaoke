@@ -8,22 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.utp.karaoke.config.DbConexion;
-import com.utp.karaoke.entities.Tarifa;
+import com.utp.karaoke.entities.Producto;
 
-public class TarifasRepository {
+public class ProductoRepository {
     private Connection connection;
-    private final String TABLE_NAME = "tarifa";
+    private final String TABLE_NAME = "producto";
 
-    public TarifasRepository() {
+    public ProductoRepository() {
         this.connection = DbConexion.getInstance().getConnection();
     }
 
-    public boolean guardar(Tarifa tarifa) {
-        String sql = "INSERT INTO " + TABLE_NAME + " (nombre, precio, fecha) VALUES (?, ?, ?)";
+    public boolean guardar(Producto producto) {
+        String sql = "INSERT INTO " + TABLE_NAME + " (nombre, tipo, precio_unitario) VALUES (?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, tarifa.getNombre());
-            ps.setDouble(2, tarifa.getPrecio());
-            ps.setDate(3, new java.sql.Date(tarifa.getFecha().getTime()));
+            ps.setString(1, producto.getNombre());
+            ps.setString(2, producto.getTipo());
+            ps.setDouble(3, producto.getPrecioUnitario());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,13 +31,13 @@ public class TarifasRepository {
         }
     }
 
-    public Tarifa buscarPorId(int id) {
+    public Producto buscarPorId(int id) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return mapTarifa(rs);
+                return mapProducto(rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,27 +45,27 @@ public class TarifasRepository {
         return null;
     }
 
-    public List<Tarifa> listarTodos() {
+    public List<Producto> listarTodos() {
         String sql = "SELECT * FROM " + TABLE_NAME;
-        List<Tarifa> tarifasList = new ArrayList<>();
+        List<Producto> productosList = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(sql)) {
             while (rs.next()) {
-                tarifasList.add(mapTarifa(rs));
+                productosList.add(mapProducto(rs));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return tarifasList;
+        return productosList;
     }
 
-    public boolean actualizar(Tarifa tarifa) {
-        String sql = "UPDATE " + TABLE_NAME + " SET nombre = ?, precio = ?, fecha = ? WHERE id = ?";
+    public boolean actualizar(Producto producto) {
+        String sql = "UPDATE " + TABLE_NAME + " SET nombre = ?, tipo = ?, precio_unitario = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, tarifa.getNombre());
-            ps.setDouble(2, tarifa.getPrecio());
-            ps.setDate(3, new java.sql.Date(tarifa.getFecha().getTime()));
-            ps.setInt(4, tarifa.getId());
+            ps.setString(1, producto.getNombre());
+            ps.setString(2, producto.getTipo());
+            ps.setDouble(3, producto.getPrecioUnitario());
+            ps.setInt(4, producto.getId());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class TarifasRepository {
         }
     }
 
-   public boolean eliminar(int id) {
+    public boolean eliminar(int id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -84,12 +84,12 @@ public class TarifasRepository {
         }
     }
 
-    private Tarifa mapTarifa(ResultSet rs) throws Exception {
-        Tarifa tarifa = new Tarifa();
-        tarifa.setId(rs.getInt("id"));
-        tarifa.setNombre(rs.getString("nombre"));
-        tarifa.setPrecio(rs.getDouble("precio"));
-        tarifa.setFecha(rs.getDate("fecha"));
-        return tarifa;
+    private Producto mapProducto(ResultSet rs) throws Exception {
+        Producto producto = new Producto();
+        producto.setId(rs.getInt("id"));
+        producto.setNombre(rs.getString("nombre"));
+        producto.setTipo(rs.getString("tipo"));
+        producto.setPrecioUnitario(rs.getDouble("precio_unitario"));
+        return producto;
     }
 }

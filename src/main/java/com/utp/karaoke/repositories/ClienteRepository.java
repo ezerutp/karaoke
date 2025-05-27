@@ -8,22 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.utp.karaoke.config.DbConexion;
-import com.utp.karaoke.entities.Tarifa;
+import com.utp.karaoke.entities.Cliente;
 
-public class TarifasRepository {
+public class ClienteRepository {
     private Connection connection;
-    private final String TABLE_NAME = "tarifa";
+    private final String TABLE_NAME = "cliente";
 
-    public TarifasRepository() {
+    public ClienteRepository() {
         this.connection = DbConexion.getInstance().getConnection();
     }
 
-    public boolean guardar(Tarifa tarifa) {
-        String sql = "INSERT INTO " + TABLE_NAME + " (nombre, precio, fecha) VALUES (?, ?, ?)";
+    public boolean guardar(Cliente cliente) {
+        String sql = "INSERT INTO " + TABLE_NAME + " (nombre, dni, telefono, correo) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, tarifa.getNombre());
-            ps.setDouble(2, tarifa.getPrecio());
-            ps.setDate(3, new java.sql.Date(tarifa.getFecha().getTime()));
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getDni());
+            ps.setString(3, cliente.getTelefono());
+            ps.setString(4, cliente.getCorreo());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,13 +32,13 @@ public class TarifasRepository {
         }
     }
 
-    public Tarifa buscarPorId(int id) {
+    public Cliente buscarPorId(int id) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return mapTarifa(rs);
+                return mapCliente(rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,27 +46,28 @@ public class TarifasRepository {
         return null;
     }
 
-    public List<Tarifa> listarTodos() {
+    public List<Cliente> listarTodos() {
         String sql = "SELECT * FROM " + TABLE_NAME;
-        List<Tarifa> tarifasList = new ArrayList<>();
+        List<Cliente> clientesList = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery(sql)) {
             while (rs.next()) {
-                tarifasList.add(mapTarifa(rs));
+                clientesList.add(mapCliente(rs));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return tarifasList;
+        return clientesList;
     }
 
-    public boolean actualizar(Tarifa tarifa) {
-        String sql = "UPDATE " + TABLE_NAME + " SET nombre = ?, precio = ?, fecha = ? WHERE id = ?";
+    public boolean actualizar(Cliente cliente) {
+        String sql = "UPDATE " + TABLE_NAME + " SET nombre = ?, dni = ?, telefono = ?, correo = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, tarifa.getNombre());
-            ps.setDouble(2, tarifa.getPrecio());
-            ps.setDate(3, new java.sql.Date(tarifa.getFecha().getTime()));
-            ps.setInt(4, tarifa.getId());
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getDni());
+            ps.setString(3, cliente.getTelefono());
+            ps.setString(4, cliente.getCorreo());
+            ps.setInt(5, cliente.getId());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +75,7 @@ public class TarifasRepository {
         }
     }
 
-   public boolean eliminar(int id) {
+    public boolean eliminar(int id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -84,12 +86,13 @@ public class TarifasRepository {
         }
     }
 
-    private Tarifa mapTarifa(ResultSet rs) throws Exception {
-        Tarifa tarifa = new Tarifa();
-        tarifa.setId(rs.getInt("id"));
-        tarifa.setNombre(rs.getString("nombre"));
-        tarifa.setPrecio(rs.getDouble("precio"));
-        tarifa.setFecha(rs.getDate("fecha"));
-        return tarifa;
+    private Cliente mapCliente(ResultSet rs) throws Exception {
+        Cliente cliente = new Cliente();
+        cliente.setId(rs.getInt("id"));
+        cliente.setNombre(rs.getString("nombre"));
+        cliente.setDni(rs.getString("dni"));
+        cliente.setTelefono(rs.getString("telefono"));
+        cliente.setCorreo(rs.getString("correo"));
+        return cliente;
     }
 }

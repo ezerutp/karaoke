@@ -1,14 +1,17 @@
 package com.utp.karaoke.entities;
 
+import java.util.Date;
+
 public class Tarifa {
     private int id;
     private String nombre;
     private double precio;
-    private String fecha;
+    private Date fecha;
 
-    public Tarifa() {}
+    public Tarifa() {
+    }
 
-    public Tarifa(int id, String nombre, double precio, String fecha) {
+    public Tarifa(int id, String nombre, double precio, Date fecha) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
@@ -16,7 +19,7 @@ public class Tarifa {
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
@@ -24,7 +27,7 @@ public class Tarifa {
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
@@ -32,18 +35,18 @@ public class Tarifa {
     }
 
     public double getPrecio() {
-        return this.precio;
+        return precio;
     }
 
     public void setPrecio(double precio) {
         this.precio = precio;
     }
 
-    public String getFecha() {
-        return this.fecha;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 }

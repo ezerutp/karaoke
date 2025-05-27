@@ -1,15 +1,23 @@
 package com.utp.karaoke.entities;
 
+import com.utp.karaoke.utils.EnumKaraoke.RolUsuario;
+
 public class Usuario {
     private int id;
     private String nombre;
     private String correo;
     private String pass;
-    private String rol;
+    private RolUsuario rol;
+
+    public enum Rol {
+        ADMINISTRADOR,
+        RECEPCIONISTA,
+        CLIENTE
+    }
 
     public Usuario() {}
 
-    public Usuario(int id, String nombre, String correo, String pass, String rol) {
+    public Usuario(int id, String nombre, String correo, String pass, RolUsuario rol) {
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;
@@ -18,7 +26,7 @@ public class Usuario {
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
@@ -26,7 +34,7 @@ public class Usuario {
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
@@ -34,7 +42,7 @@ public class Usuario {
     }
 
     public String getCorreo() {
-        return this.correo;
+        return correo;
     }
 
     public void setCorreo(String correo) {
@@ -42,18 +50,18 @@ public class Usuario {
     }
 
     public String getPass() {
-        return this.pass;
+        return pass;
     }
 
     public void setPass(String pass) {
         this.pass = pass;
     }
 
-    public String getRol() {
-        return this.rol;
+    public RolUsuario getRol() {
+        return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(RolUsuario rol) {
         this.rol = rol;
     }
 }

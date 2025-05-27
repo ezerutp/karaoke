@@ -1,5 +1,7 @@
 package com.utp.karaoke.entities;
 
+import java.util.Date;
+
 public class Configuracion {
     private int id;
     private String ruc;
@@ -7,20 +9,23 @@ public class Configuracion {
     private String telefono;
     private String direccion;
     private String mensaje;
+    private Date fechaRegistro;
 
-    public Configuracion() {}
-    
-    public Configuracion(int id, String ruc, String nombre, String telefono, String direccion, String mensaje) {
+    public Configuracion() {
+    }
+
+    public Configuracion(int id, String ruc, String nombre, String telefono, String direccion, String mensaje, Date fechaRegistro) {
         this.id = id;
         this.ruc = ruc;
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
         this.mensaje = mensaje;
+        this.fechaRegistro = fechaRegistro;
     }
 
     public int getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(int id) {
@@ -28,7 +33,7 @@ public class Configuracion {
     }
 
     public String getRuc() {
-        return this.ruc;
+        return ruc;
     }
 
     public void setRuc(String ruc) {
@@ -36,7 +41,7 @@ public class Configuracion {
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
@@ -44,7 +49,7 @@ public class Configuracion {
     }
 
     public String getTelefono() {
-        return this.telefono;
+        return telefono;
     }
 
     public void setTelefono(String telefono) {
@@ -52,7 +57,7 @@ public class Configuracion {
     }
 
     public String getDireccion() {
-        return this.direccion;
+        return direccion;
     }
 
     public void setDireccion(String direccion) {
@@ -60,10 +65,18 @@ public class Configuracion {
     }
 
     public String getMensaje() {
-        return this.mensaje;
+        return mensaje;
     }
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 }
