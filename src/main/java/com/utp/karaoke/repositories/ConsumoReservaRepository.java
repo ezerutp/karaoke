@@ -14,7 +14,7 @@ import com.utp.karaoke.services.ReservaService;
 
 public class ConsumoReservaRepository {
     private Connection connection;
-    private final String TABLE_NAME = "consumo_reserva";
+    public final static String TABLE_NAME = "consumo_reserva";
 
     public ConsumoReservaRepository() {
         this.connection = DbConexion.getInstance().getConnection();

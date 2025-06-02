@@ -15,7 +15,7 @@ import com.utp.karaoke.utils.EnumKaraoke.EstadoSala;
 
 public class SalasRepository {
     private Connection connection;
-    private final String TABLE_NAME = "sala";
+    public final static String TABLE_NAME = "sala";
 
     public SalasRepository() {
         this.connection = DbConexion.getInstance().getConnection();

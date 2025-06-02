@@ -8,7 +8,9 @@ public class LoginForm extends VentanaSinBordes {
 
     public LoginForm() {
         initComponents();
-        EventoUtils.asignarEventoClick(Lbl_salir, () -> { this.dispose(); });
+        EventoUtils.asignarEventoClick(Lbl_salir, () -> {
+            this.dispose();
+        });
         EventoUtils.asignarEventoClick(btn_Login, this::login);
         EventoUtils.asignarEventoEnter(txt_password, this::login);
     }
@@ -25,7 +27,8 @@ public class LoginForm extends VentanaSinBordes {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         Pnl_background = new javax.swing.JPanel();
@@ -69,13 +72,13 @@ public class LoginForm extends VentanaSinBordes {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Pnl_background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Pnl_background, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Pnl_background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Pnl_background, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE));
 
         pack();
         setLocationRelativeTo(null);

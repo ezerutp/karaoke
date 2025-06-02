@@ -13,7 +13,7 @@ import com.utp.karaoke.utils.EnumKaraoke.RolUsuario;
 
 public class UsuarioRepository {
     private Connection connection;
-    private final String TABLE_NAME = "usuario";
+    public final static String TABLE_NAME = "usuario";
 
     public UsuarioRepository() {
         this.connection = DbConexion.getInstance().getConnection();

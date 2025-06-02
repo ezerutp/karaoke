@@ -9,12 +9,6 @@ public class Usuario {
     private String pass;
     private RolUsuario rol;
 
-    public enum Rol {
-        ADMINISTRADOR,
-        RECEPCIONISTA,
-        CLIENTE
-    }
-
     public Usuario() {}
 
     public Usuario(int id, String nombre, String correo, String pass, RolUsuario rol) {

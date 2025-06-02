@@ -12,7 +12,7 @@ import com.utp.karaoke.entities.Tarifa;
 
 public class TarifasRepository {
     private Connection connection;
-    private final String TABLE_NAME = "tarifa";
+    public final static String TABLE_NAME = "tarifa";
 
     public TarifasRepository() {
         this.connection = DbConexion.getInstance().getConnection();

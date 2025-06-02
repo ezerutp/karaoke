@@ -16,7 +16,7 @@ import com.utp.karaoke.utils.EnumKaraoke.EstadoReserva;
 
 public class ReservaRepository {
     private Connection connection;
-    private final String TABLE_NAME = "reserva";
+    public final static String TABLE_NAME = "reserva";
 
     public ReservaRepository() {
         this.connection = DbConexion.getInstance().getConnection();

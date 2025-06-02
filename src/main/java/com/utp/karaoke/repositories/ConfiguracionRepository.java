@@ -12,7 +12,7 @@ import com.utp.karaoke.entities.Configuracion;
 
 public class ConfiguracionRepository {
     private Connection connection;
-    private final String TABLE_NAME = "configuracion";
+    public final static String TABLE_NAME = "configuracion";
 
     public ConfiguracionRepository() {
         this.connection = DbConexion.getInstance().getConnection();

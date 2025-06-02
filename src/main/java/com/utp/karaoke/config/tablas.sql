@@ -16,7 +16,7 @@ CREATE TABLE tarifa (
 CREATE TABLE sala (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100),
-    tipo VARCHAR(50), -- nuevo campo: VIP, estándar, etc.
+    tipo VARCHAR(50),
     mesas INT,
     id_tarifa INT,
     estado ENUM('libre', 'ocupada') DEFAULT 'libre',
@@ -47,7 +47,7 @@ CREATE TABLE reserva (
 CREATE TABLE producto (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100),
-    tipo VARCHAR(50), -- bebida, tiempo extra, etc.
+    tipo VARCHAR(50),
     precio_unitario DECIMAL(10, 2)
 );
 
@@ -74,7 +74,7 @@ CREATE TABLE configuracion (
 CREATE TABLE auditoria (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tabla_afectada VARCHAR(50),
-    accion VARCHAR(50), -- INSERT, UPDATE, DELETE
+    accion VARCHAR(50),
     usuario VARCHAR(100),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     descripcion TEXT

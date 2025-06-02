@@ -12,7 +12,7 @@ import com.utp.karaoke.entities.Auditoria;
 
 public class AuditoriaRepository {
     private Connection connection;
-    private final String TABLE_NAME = "auditoria";
+    public final static String TABLE_NAME = "auditoria";
 
     public AuditoriaRepository() {
         this.connection = DbConexion.getInstance().getConnection();
