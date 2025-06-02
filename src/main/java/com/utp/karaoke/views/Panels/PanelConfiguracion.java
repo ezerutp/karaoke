@@ -47,6 +47,8 @@ public class PanelConfiguracion extends javax.swing.JPanel {
     private void initComponents() {
 
         pnl_contenedor = new javax.swing.JPanel();
+        lbl_icono = new javax.swing.JLabel();
+        lbl_text = new javax.swing.JLabel();
         txt_nombre1 = new javax.swing.JTextField();
         txt_ruc = new javax.swing.JTextField();
         txt_telefono = new javax.swing.JTextField();
@@ -61,6 +63,16 @@ public class PanelConfiguracion extends javax.swing.JPanel {
 
         pnl_contenedor.setOpaque(false);
         pnl_contenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBusiness.png"))); // NOI18N
+        pnl_contenedor.add(lbl_icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(386, 15, -1, -1));
+
+        lbl_text.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbl_text.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_text.setText("Configuración de la empresa");
+        lbl_text.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pnl_contenedor.add(lbl_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 156, 900, 30));
 
         txt_nombre1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txt_nombre1.setBorder(null);
@@ -98,6 +110,8 @@ public class PanelConfiguracion extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_guardar;
     private javax.swing.JLabel lbl_background;
+    private javax.swing.JLabel lbl_icono;
+    private javax.swing.JLabel lbl_text;
     private javax.swing.JPanel pnl_contenedor;
     private javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_message;
