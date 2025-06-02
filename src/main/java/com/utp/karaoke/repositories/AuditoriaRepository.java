@@ -24,7 +24,7 @@ public class AuditoriaRepository {
             ps.setString(1, auditoria.getTablaAfectada());
             ps.setString(2, auditoria.getAccion());
             ps.setString(3, auditoria.getUsuario());
-            ps.setDate(4, new java.sql.Date(auditoria.getFecha().getTime()));
+            ps.setTimestamp(4, new java.sql.Timestamp(auditoria.getFecha().getTime()));
             ps.setString(5, auditoria.getDescripcion());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class AuditoriaRepository {
             ps.setString(1, auditoria.getTablaAfectada());
             ps.setString(2, auditoria.getAccion());
             ps.setString(3, auditoria.getUsuario());
-            ps.setDate(4, new java.sql.Date(auditoria.getFecha().getTime()));
+            ps.setTimestamp(4, new java.sql.Timestamp(auditoria.getFecha().getTime()));
             ps.setString(5, auditoria.getDescripcion());
             ps.setInt(6, auditoria.getId());
             return ps.executeUpdate() > 0;
@@ -94,7 +94,7 @@ public class AuditoriaRepository {
         auditoria.setTablaAfectada(rs.getString("tabla_afectada"));
         auditoria.setAccion(rs.getString("accion"));
         auditoria.setUsuario(rs.getString("usuario"));
-        auditoria.setFecha(rs.getDate("fecha"));
+        auditoria.setFecha(rs.getTimestamp("fecha"));
         auditoria.setDescripcion(rs.getString("descripcion"));
         return auditoria;
     }

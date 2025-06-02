@@ -23,7 +23,7 @@ public class TarifasRepository {
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, tarifa.getNombre());
             ps.setDouble(2, tarifa.getPrecio());
-            ps.setDate(3, new java.sql.Date(tarifa.getFecha().getTime()));
+            ps.setTimestamp(3, new java.sql.Timestamp(tarifa.getFecha().getTime()));
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class TarifasRepository {
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, tarifa.getNombre());
             ps.setDouble(2, tarifa.getPrecio());
-            ps.setDate(3, new java.sql.Date(tarifa.getFecha().getTime()));
+            ps.setTimestamp(3, new java.sql.Timestamp(tarifa.getFecha().getTime()));
             ps.setInt(4, tarifa.getId());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class TarifasRepository {
         tarifa.setId(rs.getInt("id"));
         tarifa.setNombre(rs.getString("nombre"));
         tarifa.setPrecio(rs.getDouble("precio"));
-        tarifa.setFecha(rs.getDate("fecha"));
+        tarifa.setFecha(rs.getTimestamp("fecha"));
         return tarifa;
     }
 }

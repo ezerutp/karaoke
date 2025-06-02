@@ -1,39 +1,54 @@
 package com.utp.karaoke.views;
 
+import java.awt.CardLayout;
 import java.util.List;
 
-import com.utp.karaoke.utils.Botones;
 import com.utp.karaoke.utils.EventoUtils;
 import com.utp.karaoke.utils.SessionLogin;
 import com.utp.karaoke.views.Buttons.ButtonPanelMenu;
 import com.utp.karaoke.views.Buttons.ButtonsFactory;
+import com.utp.karaoke.views.Buttons.ButtonsFactory.ButtonConfig;
 import com.utp.karaoke.views.Buttons.ButtonsMenu;
+import com.utp.karaoke.views.Panels.PanelConfiguracion;
 import com.utp.karaoke.views.Panels.PanelUsuario;
 
 public class MainPanel extends VentanaSinBordes {
+
     private SessionLogin sessionLogin;
+    private CardLayout cl;
 
     public MainPanel() {
-        this.sessionLogin = SessionLogin.getInstance();
         initComponents();
-
+        this.sessionLogin = SessionLogin.getInstance();
+        cl = (CardLayout) pnl_contenedor.getLayout();
         EventoUtils.asignarEventoClick(lbl_close, () -> {
             System.exit(0);
         });
 
-        List<ButtonsMenu> botones = ButtonsFactory.createMenuButtons(Botones.lista);
-        ButtonPanelMenu.addButtons(botones, pnl_botones, 10);
-
-        PanelUsuario panelUsuario = new PanelUsuario();
-        pnl_contenedor.add(panelUsuario, "PanelUsuario");
         pnl_contenedor.setVisible(true);
+        cargarPaneles();
+    }
 
-        ((java.awt.CardLayout) pnl_contenedor.getLayout()).show(pnl_contenedor, "PanelUsuario");
+    private void cargarPaneles(){
+        PanelUsuario panelUsuario = new PanelUsuario();
+        PanelConfiguracion panelConfiguracion = new PanelConfiguracion();
+
+        pnl_contenedor.add(panelConfiguracion, "Configuracion");
+        pnl_contenedor.add(panelUsuario, "Usuarios");
+
+        List<ButtonConfig> lista = List.of(
+            new ButtonConfig("Configuracion", "/images/iconConfiguracion.png", () -> cl.show(pnl_contenedor, "Configuracion")),
+            new ButtonConfig("Usuarios", "/images/iconUsuarios.png", () -> cl.show(pnl_contenedor, "Usuarios"))
+        );
+
+        List<ButtonsMenu> botones = ButtonsFactory.createMenuButtons(lista);
+        ButtonPanelMenu.addButtons(botones, pnl_botones, 10);
 
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         Pnl_background = new javax.swing.JPanel();
@@ -73,13 +88,13 @@ public class MainPanel extends VentanaSinBordes {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Pnl_background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Pnl_background, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Pnl_background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Pnl_background, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
         pack();
         setLocationRelativeTo(null);

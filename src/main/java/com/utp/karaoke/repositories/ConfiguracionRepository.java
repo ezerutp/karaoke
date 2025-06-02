@@ -26,7 +26,7 @@ public class ConfiguracionRepository {
             ps.setString(3, configuracion.getTelefono());
             ps.setString(4, configuracion.getDireccion());
             ps.setString(5, configuracion.getMensaje());
-            ps.setDate(6, new java.sql.Date(configuracion.getFechaRegistro().getTime()));
+            ps.setTimestamp(6, new java.sql.Timestamp(configuracion.getFechaRegistro().getTime()));
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,8 +70,8 @@ public class ConfiguracionRepository {
             ps.setString(3, configuracion.getTelefono());
             ps.setString(4, configuracion.getDireccion());
             ps.setString(5, configuracion.getMensaje());
-            ps.setInt(6, configuracion.getId());
-            ps.setDate(7, new java.sql.Date(configuracion.getFechaRegistro().getTime()));
+            ps.setTimestamp(6, new java.sql.Timestamp(configuracion.getFechaRegistro().getTime()));
+            ps.setInt(7, configuracion.getId());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +98,7 @@ public class ConfiguracionRepository {
         configuracion.setTelefono(rs.getString("telefono"));
         configuracion.setDireccion(rs.getString("direccion"));
         configuracion.setMensaje(rs.getString("mensaje"));
-        configuracion.setFechaRegistro(rs.getDate("fecha_registro"));
+        configuracion.setFechaRegistro(rs.getTimestamp("fecha_registro"));
         return configuracion;
     }
 }

@@ -7,16 +7,23 @@ import com.utp.karaoke.controllers.UsuarioController;
 import com.utp.karaoke.entities.Usuario;
 import com.utp.karaoke.utils.EventoUtils;
 import com.utp.karaoke.utils.EnumKaraoke.RolUsuario;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.BorderFactory;
 
 public class PanelUsuario extends javax.swing.JPanel {
+
     private final UsuarioController controller;
     private List<Usuario> usuarios;
 
     public PanelUsuario() {
         initComponents();
         this.controller = new UsuarioController();
+        this.cbx_rol.setBackground(Color.WHITE);              // Fondo blanco
+        this.cbx_rol.setForeground(Color.BLACK);              // Letras negras
+        this.cbx_rol.setFont(new Font("Arial", Font.PLAIN, 14));
+        this.cbx_rol.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         EventoUtils.asignarEventoClick(btn_registrar, this::registrarUsuario);
-
         cargarTabla();
     }
 
@@ -34,116 +41,76 @@ public class PanelUsuario extends javax.swing.JPanel {
             this.cargarTabla();
         }
     }
-    
+
     private void cargarTabla() {
         this.usuarios = controller.obtenerUsuarios();
-        this.jTable1.setModel(new UsuariosTabla(usuarios));
+        this.tbl_Usuarios.setModel(new UsuariosTabla(usuarios));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         pnl_contenedor = new javax.swing.JPanel();
-        btn_registrar = new javax.swing.JButton();
-        cbx_rol = new javax.swing.JComboBox<>();
         txt_nombre = new javax.swing.JTextField();
         txt_correo = new javax.swing.JTextField();
         txt_password = new javax.swing.JPasswordField();
-        tg_rol = new javax.swing.JLabel();
-        tg_correo = new javax.swing.JLabel();
-        tg_nombre = new javax.swing.JLabel();
-        tg_password = new javax.swing.JLabel();
-        lbl_background = new javax.swing.JLabel();
+        cbx_rol = new javax.swing.JComboBox<>();
+        btn_registrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_Usuarios = new javax.swing.JTable();
+        lbl_background = new javax.swing.JLabel();
 
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(970, 580));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Usuarios");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 440, 40));
-
         pnl_contenedor.setOpaque(false);
         pnl_contenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_registrar.setBorder(null);
-        btn_registrar.setBorderPainted(false);
-        btn_registrar.setContentAreaFilled(false);
-        pnl_contenedor.add(btn_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 200, 50));
+        txt_nombre.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txt_nombre.setBorder(null);
+        pnl_contenedor.add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 39, 570, 36));
 
-        cbx_rol.setBackground(new java.awt.Color(41, 20, 64));
-        cbx_rol.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        cbx_rol.setForeground(new java.awt.Color(255, 255, 255));
+        txt_correo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txt_correo.setBorder(null);
+        pnl_contenedor.add(txt_correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 91, 570, 36));
+
+        txt_password.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txt_password.setBorder(null);
+        pnl_contenedor.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 143, 210, 36));
+
         cbx_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "RECEPCIONISTA", "CLIENTE" }));
-        cbx_rol.setBorder(null);
         cbx_rol.setFocusable(false);
         cbx_rol.setOpaque(true);
-        pnl_contenedor.add(cbx_rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(508, 155, 180, 48));
+        pnl_contenedor.add(cbx_rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(565, 141, 240, 40));
 
-        txt_nombre.setBackground(new java.awt.Color(41, 20, 64));
-        txt_nombre.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txt_nombre.setForeground(new java.awt.Color(255, 255, 255));
-        txt_nombre.setBorder(null);
-        txt_nombre.setOpaque(true);
-        pnl_contenedor.add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 39, 460, 40));
+        btn_registrar.setBorder(null);
+        btn_registrar.setContentAreaFilled(false);
+        pnl_contenedor.add(btn_registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 195, 230, 36));
 
-        txt_correo.setBackground(new java.awt.Color(41, 20, 64));
-        txt_correo.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txt_correo.setForeground(new java.awt.Color(255, 255, 255));
-        txt_correo.setBorder(null);
-        txt_correo.setOpaque(true);
-        pnl_contenedor.add(txt_correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 101, 460, 40));
-
-        txt_password.setBackground(new java.awt.Color(41, 20, 64));
-        txt_password.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txt_password.setForeground(new java.awt.Color(255, 255, 255));
-        txt_password.setBorder(null);
-        txt_password.setOpaque(true);
-        pnl_contenedor.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 159, 210, 40));
-
-        tg_rol.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        tg_rol.setForeground(new java.awt.Color(255, 255, 255));
-        tg_rol.setText("Rol");
-        pnl_contenedor.add(tg_rol, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 167, 30, 30));
-
-        tg_correo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        tg_correo.setForeground(new java.awt.Color(255, 255, 255));
-        tg_correo.setText("Correo");
-        pnl_contenedor.add(tg_correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 105, 100, 30));
-
-        tg_nombre.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        tg_nombre.setForeground(new java.awt.Color(255, 255, 255));
-        tg_nombre.setText("Nombre");
-        pnl_contenedor.add(tg_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 43, 100, 30));
-
-        tg_password.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        tg_password.setForeground(new java.awt.Color(255, 255, 255));
-        tg_password.setText("Contraseña");
-        pnl_contenedor.add(tg_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 167, 100, 30));
-
-        lbl_background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/formUsuarios.png"))); // NOI18N
-        pnl_contenedor.add(lbl_background, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 16, -1, -1));
-
-        add(pnl_contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 820, 280));
-
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_Usuarios.setFont(new java.awt.Font("Segoe UI", 0, 19)); // NOI18N
+        tbl_Usuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.setRowHeight(30);
-        jScrollPane1.setViewportView(jTable1);
+        tbl_Usuarios.setRowHeight(30);
+        tbl_Usuarios.setRowMargin(2);
+        jScrollPane1.setViewportView(tbl_Usuarios);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 840, 250));
+        pnl_contenedor.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 275, 900, 320));
+
+        lbl_background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/figmaFormuarioRegistrarUsuario.png"))); // NOI18N
+        pnl_contenedor.add(lbl_background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 610));
+
+        add(pnl_contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 12, 900, 610));
 
         getAccessibleContext().setAccessibleName("");
     }// </editor-fold>//GEN-END:initComponents
@@ -152,15 +119,10 @@ public class PanelUsuario extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_registrar;
     private javax.swing.JComboBox<String> cbx_rol;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_background;
     private javax.swing.JPanel pnl_contenedor;
-    private javax.swing.JLabel tg_correo;
-    private javax.swing.JLabel tg_nombre;
-    private javax.swing.JLabel tg_password;
-    private javax.swing.JLabel tg_rol;
+    private javax.swing.JTable tbl_Usuarios;
     private javax.swing.JTextField txt_correo;
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JPasswordField txt_password;

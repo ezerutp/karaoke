@@ -28,7 +28,7 @@ public class ReservaRepository {
             ps.setInt(1, reserva.getCliente().getId());
             ps.setInt(2, reserva.getSala().getId());
             ps.setInt(3, reserva.getUsuario().getId());
-            ps.setDate(4, new java.sql.Date(reserva.getFecha().getTime()));
+            ps.setTimestamp(4, new java.sql.Timestamp(reserva.getFecha().getTime()));
             ps.setDouble(5, reserva.getTotal());
             ps.setString(6, reserva.getEstado().name());
             return ps.executeUpdate() > 0;
@@ -72,7 +72,7 @@ public class ReservaRepository {
             ps.setInt(1, reserva.getCliente().getId());
             ps.setInt(2, reserva.getSala().getId());
             ps.setInt(3, reserva.getUsuario().getId());
-            ps.setDate(4, new java.sql.Date(reserva.getFecha().getTime()));
+            ps.setTimestamp(4, new java.sql.Timestamp(reserva.getFecha().getTime()));
             ps.setDouble(5, reserva.getTotal());
             ps.setString(6, reserva.getEstado().name());
             ps.setInt(7, reserva.getId());
@@ -100,7 +100,7 @@ public class ReservaRepository {
         reserva.setCliente(new ClienteService().obtenerClientePorId(rs.getInt("id_cliente")));
         reserva.setSala(new SalasService().obtenerSalaPorId(rs.getInt("id_sala")));
         reserva.setUsuario(new UsuarioService().obtenerUsuarioPorId(rs.getInt("id_usuario")));
-        reserva.setFecha(rs.getDate("fecha"));
+        reserva.setFecha(rs.getTimestamp("fecha"));
         reserva.setTotal(rs.getDouble("total"));
         reserva.setEstado(EstadoReserva.valueOf(rs.getString("estado").toUpperCase()));
         return reserva;
