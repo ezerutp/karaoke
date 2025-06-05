@@ -4,7 +4,6 @@ import com.utp.karaoke.entities.Configuracion;
 import com.utp.karaoke.services.ConfiguracionService;
 
 import java.util.Date;
-
 import javax.swing.JOptionPane;
 
 public class ConfiguracionController {
@@ -14,27 +13,32 @@ public class ConfiguracionController {
         this.configuracionService = new ConfiguracionService();
     }
 
-    public boolean registrarConfiguracion(Configuracion configuracion) {
-        // Validaciones básicas
-        if (configuracion.getRuc() == null || configuracion.getRuc().isEmpty()) {
+    // Método privado para validar campos obligatorios
+    private boolean validarCampos(Configuracion configuracion) {
+        if (configuracion.getRuc() == null || configuracion.getRuc().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "El RUC no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (configuracion.getNombre() == null || configuracion.getNombre().isEmpty()) {
+        if (configuracion.getNombre() == null || configuracion.getNombre().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (configuracion.getTelefono() == null || configuracion.getTelefono().isEmpty()) {
+        if (configuracion.getTelefono() == null || configuracion.getTelefono().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "El teléfono no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (configuracion.getDireccion() == null || configuracion.getDireccion().isEmpty()) {
+        if (configuracion.getDireccion() == null || configuracion.getDireccion().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "La dirección no puede estar vacía.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        return true;
+    }
 
+    public boolean registrarConfiguracion(Configuracion configuracion) {
+        if (!validarCampos(configuracion)) {
+            return false;
+        }
         configuracion.setFechaRegistro(new Date());
-
         boolean registrado = configuracionService.registrarConfiguracion(configuracion);
         if (registrado) {
             JOptionPane.showMessageDialog(null, "Configuración registrada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -50,6 +54,9 @@ public class ConfiguracionController {
     }
 
     public boolean actualizarConfiguracion(Configuracion configuracion) {
+        if (!validarCampos(configuracion)) {
+            return false;
+        }
         configuracion.setFechaRegistro(new Date());
         boolean actualizado = configuracionService.actualizarConfiguracion(configuracion);
         if (actualizado) {

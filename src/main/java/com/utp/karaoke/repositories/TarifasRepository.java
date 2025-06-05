@@ -9,8 +9,9 @@ import java.util.List;
 
 import com.utp.karaoke.config.DbConexion;
 import com.utp.karaoke.entities.Tarifa;
+import com.utp.karaoke.interfaces.Repository;
 
-public class TarifasRepository {
+public class TarifasRepository  implements Repository<Integer, Tarifa> {
     private Connection connection;
     public final static String TABLE_NAME = "tarifa";
 
@@ -18,6 +19,7 @@ public class TarifasRepository {
         this.connection = DbConexion.getInstance().getConnection();
     }
 
+    @Override
     public boolean guardar(Tarifa tarifa) {
         String sql = "INSERT INTO " + TABLE_NAME + " (nombre, precio, fecha) VALUES (?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -31,7 +33,8 @@ public class TarifasRepository {
         }
     }
 
-    public Tarifa buscarPorId(int id) {
+    @Override
+    public Tarifa buscarPorId(Integer id) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -45,6 +48,7 @@ public class TarifasRepository {
         return null;
     }
 
+    @Override
     public List<Tarifa> listarTodos() {
         String sql = "SELECT * FROM " + TABLE_NAME;
         List<Tarifa> tarifasList = new ArrayList<>();
@@ -59,6 +63,7 @@ public class TarifasRepository {
         return tarifasList;
     }
 
+    @Override
     public boolean actualizar(Tarifa tarifa) {
         String sql = "UPDATE " + TABLE_NAME + " SET nombre = ?, precio = ?, fecha = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -73,7 +78,8 @@ public class TarifasRepository {
         }
     }
 
-   public boolean eliminar(int id) {
+   @Override
+   public boolean eliminar(Integer id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

@@ -2,6 +2,9 @@ package com.utp.karaoke.utils;
 
 import javax.swing.*;
 
+import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -24,6 +27,27 @@ public class EventoUtils {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     accion.run();
+                }
+            }
+        });
+    }
+
+    public static void aplicarPlaceholder(JTextField textField, String placeholder) {
+        Color placeholderColor = Color.LIGHT_GRAY;
+        Color normalColor = Color.BLACK;
+
+        textField.setText(placeholder);
+        textField.setForeground(placeholderColor);
+
+        final boolean[] placeholderActivo = {true};
+
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (placeholderActivo[0]) {
+                    textField.setText("");
+                    textField.setForeground(normalColor);
+                    placeholderActivo[0] = false;
                 }
             }
         });

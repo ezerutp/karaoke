@@ -3,6 +3,7 @@ package com.utp.karaoke.views.Panels;
 import com.utp.karaoke.controllers.ConfiguracionController;
 import com.utp.karaoke.entities.Configuracion;
 import com.utp.karaoke.utils.EventoUtils;
+import com.utp.karaoke.utils.Eventos;
 
 public class PanelConfiguracion extends javax.swing.JPanel {
 
@@ -40,10 +41,22 @@ public class PanelConfiguracion extends javax.swing.JPanel {
             this.txt_telefono.setText(configuracion.getTelefono());
             this.txt_direccion.setText(configuracion.getDireccion());
             this.txt_message.setText(configuracion.getMensaje());
+        } else {
+            aplicarPlaceholder();
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void aplicarPlaceholder() {
+        // Placeholders
+        EventoUtils.aplicarPlaceholder(txt_ruc, "RUC de la empresa");
+        EventoUtils.aplicarPlaceholder(txt_nombre1, "Nombre de la empresa");
+        EventoUtils.aplicarPlaceholder(txt_telefono, "Teléfono");
+        EventoUtils.aplicarPlaceholder(txt_direccion, "Dirección");
+        EventoUtils.aplicarPlaceholder(txt_message, "Mensaje para mostrar en el voucher");
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnl_contenedor = new javax.swing.JPanel();
@@ -98,14 +111,14 @@ public class PanelConfiguracion extends javax.swing.JPanel {
         btn_guardar.setContentAreaFilled(false);
         pnl_contenedor.add(btn_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(579, 487, 230, 36));
 
-        lbl_background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/figmaFormularioConfiguracion.png"))); // NOI18N
+        lbl_background
+                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/figmaFormularioConfiguracion.png"))); // NOI18N
         pnl_contenedor.add(lbl_background, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, 350));
 
-        add(pnl_contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 12, 900, 610));
+        add(pnl_contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 32, 900, 580));
 
         getAccessibleContext().setAccessibleName("");
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_guardar;

@@ -9,10 +9,11 @@ import java.util.List;
 
 import com.utp.karaoke.config.DbConexion;
 import com.utp.karaoke.entities.ConsumoReserva;
+import com.utp.karaoke.interfaces.Repository;
 import com.utp.karaoke.services.ProductoService;
 import com.utp.karaoke.services.ReservaService;
 
-public class ConsumoReservaRepository {
+public class ConsumoReservaRepository implements Repository<Integer, ConsumoReserva> {
     private Connection connection;
     public final static String TABLE_NAME = "consumo_reserva";
 
@@ -20,6 +21,7 @@ public class ConsumoReservaRepository {
         this.connection = DbConexion.getInstance().getConnection();
     }
 
+    @Override
     public boolean guardar(ConsumoReserva consumoReserva) {
         String sql = "INSERT INTO " + TABLE_NAME + " (id_reserva, id_producto, cantidad, comentario) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -34,7 +36,8 @@ public class ConsumoReservaRepository {
         }
     }
 
-    public ConsumoReserva buscarPorId(int id) {
+    @Override
+    public ConsumoReserva buscarPorId(Integer id) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -48,6 +51,7 @@ public class ConsumoReservaRepository {
         return null;
     }
 
+    @Override
     public List<ConsumoReserva> listarTodos() {
         String sql = "SELECT * FROM " + TABLE_NAME;
         List<ConsumoReserva> consumosList = new ArrayList<>();
@@ -62,6 +66,7 @@ public class ConsumoReservaRepository {
         return consumosList;
     }
 
+    @Override
     public boolean actualizar(ConsumoReserva consumoReserva) {
         String sql = "UPDATE " + TABLE_NAME + " SET id_reserva = ?, id_producto = ?, cantidad = ?, comentario = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -77,7 +82,8 @@ public class ConsumoReservaRepository {
         }
     }
 
-    public boolean eliminar(int id) {
+    @Override
+    public boolean eliminar(Integer id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

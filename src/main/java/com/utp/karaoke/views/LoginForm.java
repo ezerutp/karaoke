@@ -1,5 +1,7 @@
 package com.utp.karaoke.views;
 
+import javax.swing.SwingUtilities;
+
 import com.utp.karaoke.controllers.LoginController;
 import com.utp.karaoke.utils.EventoUtils;
 import com.utp.karaoke.utils.SessionLogin;
@@ -8,11 +10,14 @@ public class LoginForm extends VentanaSinBordes {
 
     public LoginForm() {
         initComponents();
+        SwingUtilities.invokeLater(() -> Lbl_salir.requestFocusInWindow());
         EventoUtils.asignarEventoClick(Lbl_salir, () -> {
             this.dispose();
         });
         EventoUtils.asignarEventoClick(btn_Login, this::login);
         EventoUtils.asignarEventoEnter(txt_password, this::login);
+        EventoUtils.aplicarPlaceholder(txt_correo, "Correo electrónico");
+        EventoUtils.aplicarPlaceholder(txt_password, "Contraseña");
     }
 
     private void login() {

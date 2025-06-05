@@ -9,8 +9,9 @@ import java.util.List;
 
 import com.utp.karaoke.config.DbConexion;
 import com.utp.karaoke.entities.Producto;
+import com.utp.karaoke.interfaces.Repository;
 
-public class ProductoRepository {
+public class ProductoRepository implements Repository<Integer, Producto> {
     private Connection connection;
     public final static String TABLE_NAME = "producto";
 
@@ -18,6 +19,7 @@ public class ProductoRepository {
         this.connection = DbConexion.getInstance().getConnection();
     }
 
+    @Override
     public boolean guardar(Producto producto) {
         String sql = "INSERT INTO " + TABLE_NAME + " (nombre, tipo, precio_unitario) VALUES (?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -31,7 +33,8 @@ public class ProductoRepository {
         }
     }
 
-    public Producto buscarPorId(int id) {
+    @Override
+    public Producto buscarPorId(Integer id) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -45,6 +48,7 @@ public class ProductoRepository {
         return null;
     }
 
+    @Override
     public List<Producto> listarTodos() {
         String sql = "SELECT * FROM " + TABLE_NAME;
         List<Producto> productosList = new ArrayList<>();
@@ -59,6 +63,7 @@ public class ProductoRepository {
         return productosList;
     }
 
+    @Override
     public boolean actualizar(Producto producto) {
         String sql = "UPDATE " + TABLE_NAME + " SET nombre = ?, tipo = ?, precio_unitario = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -73,7 +78,8 @@ public class ProductoRepository {
         }
     }
 
-    public boolean eliminar(int id) {
+    @Override
+    public boolean eliminar(Integer id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

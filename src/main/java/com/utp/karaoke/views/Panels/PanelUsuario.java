@@ -10,6 +10,7 @@ import com.utp.karaoke.utils.EnumKaraoke.RolUsuario;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BorderFactory;
+import javax.swing.SwingUtilities;
 
 public class PanelUsuario extends javax.swing.JPanel {
 
@@ -18,12 +19,20 @@ public class PanelUsuario extends javax.swing.JPanel {
 
     public PanelUsuario() {
         initComponents();
+        SwingUtilities.invokeLater(() -> btn_registrar.requestFocusInWindow());
         this.controller = new UsuarioController();
         this.cbx_rol.setBackground(Color.WHITE);              // Fondo blanco
         this.cbx_rol.setForeground(Color.BLACK);              // Letras negras
         this.cbx_rol.setFont(new Font("Arial", Font.PLAIN, 14));
         this.cbx_rol.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         EventoUtils.asignarEventoClick(btn_registrar, this::registrarUsuario);
+
+        // Placeholders para los campos de texto
+        EventoUtils.aplicarPlaceholder(txt_correo, "Correo electrónico");
+        EventoUtils.aplicarPlaceholder(txt_nombre, "Nombre completo");
+        EventoUtils.aplicarPlaceholder(txt_password, "Contraseña");
+
+        // Cargar la tabla de usuarios al iniciar
         cargarTabla();
     }
 

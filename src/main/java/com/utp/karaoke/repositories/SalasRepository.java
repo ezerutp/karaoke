@@ -10,10 +10,11 @@ import java.util.List;
 import com.utp.karaoke.config.DbConexion;
 import com.utp.karaoke.entities.Sala;
 import com.utp.karaoke.entities.Tarifa;
+import com.utp.karaoke.interfaces.Repository;
 import com.utp.karaoke.services.TarifasService;
 import com.utp.karaoke.utils.EnumKaraoke.EstadoSala;
 
-public class SalasRepository {
+public class SalasRepository implements Repository<Integer, Sala> {
     private Connection connection;
     public final static String TABLE_NAME = "sala";
 
@@ -21,6 +22,7 @@ public class SalasRepository {
         this.connection = DbConexion.getInstance().getConnection();
     }
 
+    @Override
     public boolean guardar(Sala sala) {
         String sql = "INSERT INTO " + TABLE_NAME + " (nombre, tipo, mesas, id_tarifa, estado) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -36,7 +38,8 @@ public class SalasRepository {
         }
     }
 
-    public Sala buscarPorId(int id) {
+    @Override
+    public Sala buscarPorId(Integer id) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -50,6 +53,7 @@ public class SalasRepository {
         return null;
     }
 
+    @Override
     public List<Sala> listarTodos() {
         String sql = "SELECT * FROM " + TABLE_NAME;
         List<Sala> salasList = new ArrayList<>();
@@ -64,6 +68,7 @@ public class SalasRepository {
         return salasList;
     }
 
+    @Override
     public boolean actualizar(Sala sala) {
         String sql = "UPDATE " + TABLE_NAME + " SET nombre = ?, tipo = ?, mesas = ?, id_tarifa = ?, estado = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -80,7 +85,8 @@ public class SalasRepository {
         }
     }
 
-    public boolean eliminar(int id) {
+    @Override
+    public boolean eliminar(Integer id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

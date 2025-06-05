@@ -9,9 +9,10 @@ import java.util.List;
 
 import com.utp.karaoke.config.DbConexion;
 import com.utp.karaoke.entities.Usuario;
+import com.utp.karaoke.interfaces.Repository;
 import com.utp.karaoke.utils.EnumKaraoke.RolUsuario;
 
-public class UsuarioRepository {
+public class UsuarioRepository implements Repository<Integer, Usuario> {
     private Connection connection;
     public final static String TABLE_NAME = "usuario";
 
@@ -19,6 +20,7 @@ public class UsuarioRepository {
         this.connection = DbConexion.getInstance().getConnection();
     }
 
+    @Override
     public boolean guardar(Usuario usuario) {
         String sql = "INSERT INTO " + TABLE_NAME + " (nombre, correo, pass, rol) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -33,7 +35,8 @@ public class UsuarioRepository {
         }
     }
 
-    public Usuario buscarPorId(int id) {
+    @Override
+    public Usuario buscarPorId(Integer id) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -47,6 +50,7 @@ public class UsuarioRepository {
         return null;
     }
 
+    @Override
     public List<Usuario> listarTodos() {
         String sql = "SELECT * FROM " + TABLE_NAME;
         List<Usuario> usuariosList = new ArrayList<>();
@@ -61,6 +65,7 @@ public class UsuarioRepository {
         return usuariosList;
     }
 
+    @Override
     public boolean actualizar(Usuario usuario) {
         String sql = "UPDATE " + TABLE_NAME + " SET nombre = ?, correo = ?, pass = ?, rol = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -76,7 +81,8 @@ public class UsuarioRepository {
         }
     }
 
-    public boolean eliminar(int id) {
+    @Override
+    public boolean eliminar(Integer id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

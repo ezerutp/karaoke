@@ -9,8 +9,9 @@ import java.util.List;
 
 import com.utp.karaoke.config.DbConexion;
 import com.utp.karaoke.entities.Configuracion;
+import com.utp.karaoke.interfaces.Repository;
 
-public class ConfiguracionRepository {
+public class ConfiguracionRepository implements Repository<Integer, Configuracion> {
     private Connection connection;
     public final static String TABLE_NAME = "configuracion";
 
@@ -18,6 +19,7 @@ public class ConfiguracionRepository {
         this.connection = DbConexion.getInstance().getConnection();
     }
 
+    @Override
     public boolean guardar(Configuracion configuracion) {
         String sql = "INSERT INTO " + TABLE_NAME + " (ruc, nombre, telefono, direccion, mensaje, fecha_registro) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -34,7 +36,8 @@ public class ConfiguracionRepository {
         }
     }
 
-    public Configuracion buscarPorId(int id) {
+    @Override
+    public Configuracion buscarPorId(Integer id) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -48,6 +51,7 @@ public class ConfiguracionRepository {
         return null;
     }
 
+    @Override
     public List<Configuracion> listarTodos() {
         String sql = "SELECT * FROM " + TABLE_NAME;
         List<Configuracion> configuraciones = new ArrayList<>();
@@ -62,6 +66,7 @@ public class ConfiguracionRepository {
         return configuraciones;
     }
 
+    @Override
     public boolean actualizar(Configuracion configuracion) {
         String sql = "UPDATE " + TABLE_NAME + " SET ruc = ?, nombre = ?, telefono = ?, direccion = ?, mensaje = ?, fecha_registro = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -79,7 +84,8 @@ public class ConfiguracionRepository {
         }
     }
 
-    public boolean eliminar(int id) {
+    @Override
+    public boolean eliminar(Integer id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

@@ -19,6 +19,7 @@ public class MainPanel extends VentanaSinBordes {
 
     public MainPanel() {
         initComponents();
+        
         this.sessionLogin = SessionLogin.getInstance();
         cl = (CardLayout) pnl_contenedor.getLayout();
         EventoUtils.asignarEventoClick(lbl_close, () -> {
