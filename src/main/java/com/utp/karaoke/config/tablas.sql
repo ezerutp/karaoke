@@ -3,7 +3,7 @@ CREATE TABLE usuario (
     nombre VARCHAR(100),
     correo VARCHAR(100),
     pass VARCHAR(255),
-    rol ENUM('administrador', 'recepcionista', 'cliente') NOT NULL
+    rol ENUM('ADMINISTRADOR', 'RECEPCIONISTA', 'CLIENTE') NOT NULL
 );
 
 CREATE TABLE tarifa (
@@ -19,7 +19,7 @@ CREATE TABLE sala (
     tipo VARCHAR(50),
     mesas INT,
     id_tarifa INT,
-    estado ENUM('libre', 'ocupada') DEFAULT 'libre',
+    estado ENUM('LIBRE', 'OCUPADA') DEFAULT 'LIBRE',
     FOREIGN KEY (id_tarifa) REFERENCES tarifa(id)
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE reserva (
     id_usuario INT,
     fecha DATE,
     total DECIMAL(10, 2),
-    estado ENUM('pendiente', 'cancelada', 'finalizada'),
+    estado ENUM('LIBRE', 'OCUPADA', 'RESERVADO'),
     FOREIGN KEY (id_cliente) REFERENCES cliente(id),
     FOREIGN KEY (id_sala) REFERENCES sala(id),
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)

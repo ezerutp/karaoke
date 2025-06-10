@@ -4,23 +4,20 @@ import java.awt.CardLayout;
 import java.util.List;
 
 import com.utp.karaoke.utils.EventoUtils;
-import com.utp.karaoke.utils.SessionLogin;
 import com.utp.karaoke.views.Buttons.ButtonPanelMenu;
 import com.utp.karaoke.views.Buttons.ButtonsFactory;
 import com.utp.karaoke.views.Buttons.ButtonsFactory.ButtonConfig;
 import com.utp.karaoke.views.Buttons.ButtonsMenu;
 import com.utp.karaoke.views.Panels.PanelConfiguracion;
+import com.utp.karaoke.views.Panels.PanelReservas;
 import com.utp.karaoke.views.Panels.PanelUsuario;
 
 public class MainPanel extends VentanaSinBordes {
 
-    private SessionLogin sessionLogin;
     private CardLayout cl;
 
     public MainPanel() {
         initComponents();
-        
-        this.sessionLogin = SessionLogin.getInstance();
         cl = (CardLayout) pnl_contenedor.getLayout();
         EventoUtils.asignarEventoClick(lbl_close, () -> {
             System.exit(0);
@@ -31,13 +28,16 @@ public class MainPanel extends VentanaSinBordes {
     }
 
     private void cargarPaneles(){
+        PanelReservas panelReservas = new PanelReservas();
         PanelUsuario panelUsuario = new PanelUsuario();
         PanelConfiguracion panelConfiguracion = new PanelConfiguracion();
 
+        pnl_contenedor.add(panelReservas, "Reservas");
         pnl_contenedor.add(panelConfiguracion, "Configuracion");
         pnl_contenedor.add(panelUsuario, "Usuarios");
 
         List<ButtonConfig> lista = List.of(
+            new ButtonConfig("Reservas", "/images/iconReserva.png", () -> cl.show(pnl_contenedor, "Reservas")),
             new ButtonConfig("Configuracion", "/images/iconConfiguracion.png", () -> cl.show(pnl_contenedor, "Configuracion")),
             new ButtonConfig("Usuarios", "/images/iconUsuarios.png", () -> cl.show(pnl_contenedor, "Usuarios"))
         );

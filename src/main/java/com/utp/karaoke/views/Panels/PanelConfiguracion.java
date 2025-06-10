@@ -3,7 +3,6 @@ package com.utp.karaoke.views.Panels;
 import com.utp.karaoke.controllers.ConfiguracionController;
 import com.utp.karaoke.entities.Configuracion;
 import com.utp.karaoke.utils.EventoUtils;
-import com.utp.karaoke.utils.Eventos;
 
 public class PanelConfiguracion extends javax.swing.JPanel {
 

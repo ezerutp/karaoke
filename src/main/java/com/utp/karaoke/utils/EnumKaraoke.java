@@ -14,8 +14,8 @@ public class EnumKaraoke {
     }
 
     public static enum EstadoReserva {
-        PENDIENTE,
-        CANCELADA,
-        FINALIZADA
+        LIBRE,
+        OCUPADA,
+        RESERVADO
     }
 }
