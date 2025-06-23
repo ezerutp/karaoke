@@ -39,4 +39,11 @@ public class UsuariosTabla extends AbstractTableModel {
     public String getColumnName(int column) {
         return columnNames[column];
     }
+
+    public void removeRow(int rowIndex) {
+        if (rowIndex >= 0 && rowIndex < data.size()) {
+            data.remove(rowIndex);
+            fireTableRowsDeleted(rowIndex, rowIndex);
+        }
+    }
 }

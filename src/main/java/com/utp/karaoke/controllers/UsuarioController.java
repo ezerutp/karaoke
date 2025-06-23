@@ -51,7 +51,55 @@ public class UsuarioController {
         }
     }
 
+    public boolean actualizarUsuario(Usuario usuario) {
+
+        Usuario usuarioExistente = usuarioService.obtenerUsuarioPorId(usuario.getId());
+
+        // Validaciones básicas
+        if (usuario.getCorreo() == null || usuario.getCorreo().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El correo no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!usuario.getCorreo().contains("@")) {
+            JOptionPane.showMessageDialog(null, "El correo no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if(!usuario.getPass().equalsIgnoreCase(usuarioExistente.getPass())) {
+            usuario.setPass(usuarioService.cifrarPass(usuario.getPass()));
+        }
+
+        boolean actualizado = usuarioService.actualizarUsuario(usuario);
+        if (actualizado) {
+            JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al actualizar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
     public List<Usuario> obtenerUsuarios() {
         return usuarioService.obtenerTodosUsuarios();
+    }
+
+    public Usuario obtenerUsuarioPorCorreo(String correo) {
+        List<Usuario> usuarios = usuarioService.obtenerTodosUsuarios();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getCorreo().equalsIgnoreCase(correo)) {
+                return usuario;
+            }
+        }
+        return null;
+    }
+
+    public boolean eliminarUsuario(int id) {
+        boolean eliminado = usuarioService.eliminarUsuario(id);
+        if (eliminado) {
+            JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 }

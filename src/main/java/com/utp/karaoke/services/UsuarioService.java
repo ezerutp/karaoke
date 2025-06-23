@@ -42,7 +42,7 @@ public class UsuarioService {
     }
 
     //Metodo para cifrar la contraseña
-    private String cifrarPass(String pass) {
+    public String cifrarPass(String pass) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(pass.getBytes());

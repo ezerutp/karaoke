@@ -32,6 +32,23 @@ public class EventoUtils {
         });
     }
 
+    public static void validarNumero(JTextField textField) {
+        textField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                String text = textField.getText();
+
+                // Permitir solo dígitos y un solo punto decimal
+                if (!Character.isDigit(c) && c != '.') {
+                    e.consume();
+                } else if (c == '.' && text.contains(".")) {
+                    e.consume();
+                }
+            }
+        });
+    }
+
     public static void aplicarPlaceholder(JTextField textField, String placeholder) {
         Color placeholderColor = Color.LIGHT_GRAY;
         Color normalColor = Color.BLACK;
@@ -39,7 +56,7 @@ public class EventoUtils {
         textField.setText(placeholder);
         textField.setForeground(placeholderColor);
 
-        final boolean[] placeholderActivo = {true};
+        final boolean[] placeholderActivo = { true };
 
         textField.addFocusListener(new FocusAdapter() {
             @Override
