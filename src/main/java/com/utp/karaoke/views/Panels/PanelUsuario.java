@@ -34,10 +34,6 @@ public class PanelUsuario extends javax.swing.JPanel {
         initComponents();
         SwingUtilities.invokeLater(() -> btn_registrar.requestFocusInWindow());
         this.controller = new UsuarioController();
-        this.cbx_rol.setBackground(Color.WHITE); // Fondo blanco
-        this.cbx_rol.setForeground(Color.BLACK); // Letras negras
-        this.cbx_rol.setFont(new Font("Arial", Font.PLAIN, 14));
-        this.cbx_rol.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         EventoUtils.asignarEventoClick(btn_registrar, this::registrarUsuario);
         aplicarPlaceholder();
         // Cargar la tabla de usuarios al iniciar
