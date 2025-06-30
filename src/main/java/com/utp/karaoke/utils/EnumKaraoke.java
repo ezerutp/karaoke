@@ -18,4 +18,10 @@ public class EnumKaraoke {
         OCUPADA,
         RESERVADO
     }
+
+    public static enum TipoBox {
+        BASICO,
+        CLASICO,
+        VIP
+    }
 }

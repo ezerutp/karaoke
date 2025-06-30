@@ -9,6 +9,7 @@ import com.utp.karaoke.views.Buttons.ButtonPanelMenu;
 import com.utp.karaoke.views.Buttons.ButtonsFactory;
 import com.utp.karaoke.views.Buttons.ButtonsFactory.ButtonConfig;
 import com.utp.karaoke.views.Buttons.ButtonsMenu;
+import com.utp.karaoke.views.Panels.PanelBoxes;
 import com.utp.karaoke.views.Panels.PanelConfiguracion;
 import com.utp.karaoke.views.Panels.PanelReservas;
 import com.utp.karaoke.views.Panels.PanelTarifas;
@@ -38,18 +39,20 @@ public class MainPanel extends VentanaSinBordes {
     private void cargarPaneles(){
         PanelReservas panelReservas = new PanelReservas();
         PanelTarifas panelTarifas = new PanelTarifas();
+        PanelBoxes panelBoxes = new PanelBoxes();
         PanelUsuario panelUsuario = new PanelUsuario();
         PanelConfiguracion panelConfiguracion = new PanelConfiguracion();
 
         pnl_contenedor.add(panelReservas, "Reservas");
         pnl_contenedor.add(panelTarifas, "Tarifas");
+        pnl_contenedor.add(panelBoxes, "Boxes");
         pnl_contenedor.add(panelConfiguracion, "Configuracion");
         pnl_contenedor.add(panelUsuario, "Usuarios");
 
         List<ButtonConfig> lista = List.of(
             new ButtonConfig("Reservas", "/images/iconReserva.png", () -> cl.show(pnl_contenedor, "Reservas")),
             new ButtonConfig("Tarifas", "/images/iconTarifa.png", () -> cl.show(pnl_contenedor, "Tarifas")),
-            new ButtonConfig("Boxes", "/images/iconBoxes.png", () -> cl.show(pnl_contenedor, "Reservas")),
+            new ButtonConfig("Boxes", "/images/iconBoxes.png", () -> cl.show(pnl_contenedor, "Boxes")),
             new ButtonConfig("Configuracion", "/images/iconConfiguracion.png", () -> cl.show(pnl_contenedor, "Configuracion")),
             new ButtonConfig("Usuarios", "/images/iconUsuarios.png", () -> cl.show(pnl_contenedor, "Usuarios"))
         );

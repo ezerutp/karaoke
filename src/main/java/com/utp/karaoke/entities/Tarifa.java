@@ -49,4 +49,9 @@ public class Tarifa {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+    @Override
+    public String toString() {
+        return nombre + " - S/" + precio;
+    }
 }

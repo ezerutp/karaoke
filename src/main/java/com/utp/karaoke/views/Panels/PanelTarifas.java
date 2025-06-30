@@ -2,33 +2,24 @@ package com.utp.karaoke.views.Panels;
 
 import java.util.Date;
 
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import com.utp.karaoke.AbstracTablas.TarifaTabla;
 import com.utp.karaoke.controllers.TarifaController;
 import com.utp.karaoke.entities.Tarifa;
 import com.utp.karaoke.utils.EventoUtils;
-//import com.utp.karaoke.views.Dialogs.DialogUsuario;
+import com.utp.karaoke.utils.PopUpTabla;
+
 import com.utp.karaoke.views.Dialogs.DialogTarifa;
 
 public class PanelTarifas extends javax.swing.JPanel {
 
     private final TarifaController controller;
 
-    // Popup menu para la tabla
-    private JPopupMenu popupMenu;
-    private JMenuItem menuItemEditar;
-    private JMenuItem menuItemEliminar;
-
     public PanelTarifas() {
         initComponents();
         this.controller = new TarifaController();
-        EventoUtils.validarNumero(this.txt_precio);
+        EventoUtils.validarNumeroDecimal(this.txt_precio);
         EventoUtils.asignarEventoClick(jButton1, this::registrarTarifa);
         aplicarPlaceholder();
         cargarTabla();
@@ -60,74 +51,32 @@ public class PanelTarifas extends javax.swing.JPanel {
     }
 
     private void addPopupMenu() {
-        popupMenu = new JPopupMenu();
-        menuItemEditar = new JMenuItem("Editar");
-        menuItemEliminar = new JMenuItem("Eliminar");
-        popupMenu.add(menuItemEditar);
-        popupMenu.add(menuItemEliminar);
-
-        // Agregar el listener a la tabla
-        tbl_Usuarios.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mostrarMenu(e);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                mostrarMenu(e);
-            }
-
-            private void mostrarMenu(MouseEvent e) {
-                if (e.isPopupTrigger()) {
-                    int fila = tbl_Usuarios.rowAtPoint(e.getPoint());
-                    if (fila >= 0 && fila < tbl_Usuarios.getRowCount()) {
-                        tbl_Usuarios.setRowSelectionInterval(fila, fila);
-                        popupMenu.show(e.getComponent(), e.getX(), e.getY());
-                    }
-                }
-            }
-        });
-
-        // Acción de editar
-        menuItemEditar.addActionListener(evt -> {
-            int fila = tbl_Usuarios.getSelectedRow();
-            if (fila != -1) {
-                String nombre = (String) tbl_Usuarios.getValueAt(fila, 0);
-                Tarifa tarifa = controller.obtenerTarifaPorNombre(nombre);
-                if (tarifa != null) {
+        PopUpTabla.addPopupMenu(
+                tbl_Usuarios,
+                0,
+                controller::obtenerTarifaPorNombre,
+                tarifa -> {
                     DialogTarifa dialog = new DialogTarifa(null, true, tarifa);
                     dialog.setVisible(true);
                     cargarTabla();
-                }
-            }
-        });
-
-        // Acción de eliminar
-        menuItemEliminar.addActionListener(evt -> {
-            int fila = tbl_Usuarios.getSelectedRow();
-            if (fila != -1) {
-                String nombre = (String) tbl_Usuarios.getValueAt(fila, 0);
-                Tarifa tarifa = controller.obtenerTarifaPorNombre(nombre);
-                if (tarifa != null) {
-                    // confirmar la eliminación
+                },
+                tarifa -> {
                     int confirmacion = JOptionPane.showConfirmDialog(null,
                             "¿Estás seguro de que deseas eliminar la tarifa " + tarifa.getNombre() + "?",
                             "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
                     if (confirmacion != JOptionPane.YES_OPTION) {
-                        return; // Si el usuario no confirma, no se elimina
+                        return;
                     }
                     controller.eliminarTarifa(tarifa.getId());
-                }
-                ((TarifaTabla) tbl_Usuarios.getModel()).removeRow(fila);
-            }
-        });
+                    cargarTabla();
+                }, fila -> ((TarifaTabla) tbl_Usuarios.getModel()).removeRow(fila), this::cargarTabla);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnl_contenedor = new javax.swing.JPanel();
@@ -163,17 +112,16 @@ public class PanelTarifas extends javax.swing.JPanel {
 
         tbl_Usuarios.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tbl_Usuarios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+                new Object[][] {
+                        { null, null, null, null },
+                        { null, null, null, null },
+                        { null, null, null, null },
+                        { null, null, null, null },
+                        { null, null, null, null }
+                },
+                new String[] {
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }));
         tbl_Usuarios.setRowHeight(40);
         tbl_Usuarios.setRowMargin(2);
         jScrollPane1.setViewportView(tbl_Usuarios);

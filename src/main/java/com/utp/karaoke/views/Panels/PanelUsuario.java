@@ -6,29 +6,17 @@ import com.utp.karaoke.AbstracTablas.UsuariosTabla;
 import com.utp.karaoke.controllers.UsuarioController;
 import com.utp.karaoke.entities.Usuario;
 import com.utp.karaoke.utils.EventoUtils;
+import com.utp.karaoke.utils.PopUpTabla;
 import com.utp.karaoke.utils.EnumKaraoke.RolUsuario;
 import com.utp.karaoke.views.Dialogs.DialogUsuario;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 public class PanelUsuario extends javax.swing.JPanel {
 
     private final UsuarioController controller;
     private List<Usuario> usuarios;
-
-    // Popup menu para la tabla
-    private JPopupMenu popupMenu;
-    private JMenuItem menuItemEditar;
-    private JMenuItem menuItemEliminar;
 
     public PanelUsuario() {
         initComponents();
@@ -53,7 +41,6 @@ public class PanelUsuario extends javax.swing.JPanel {
         user.setCorreo(this.txt_correo.getText());
         user.setPass(new String(this.txt_password.getPassword()));
         user.setRol(RolUsuario.valueOf((String) this.cbx_rol.getSelectedItem()));
-
         if (controller.registrarUsuario(user)) {
             aplicarPlaceholder();
             this.cargarTabla();
@@ -66,68 +53,24 @@ public class PanelUsuario extends javax.swing.JPanel {
     }
 
     private void addPopupMenu() {
-        popupMenu = new JPopupMenu();
-        menuItemEditar = new JMenuItem("Editar");
-        menuItemEliminar = new JMenuItem("Eliminar");
-        popupMenu.add(menuItemEditar);
-        popupMenu.add(menuItemEliminar);
-
-        // Agregar el listener a la tabla
-        tbl_Usuarios.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mostrarMenu(e);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                mostrarMenu(e);
-            }
-
-            private void mostrarMenu(MouseEvent e) {
-                if (e.isPopupTrigger()) {
-                    int fila = tbl_Usuarios.rowAtPoint(e.getPoint());
-                    if (fila >= 0 && fila < tbl_Usuarios.getRowCount()) {
-                        tbl_Usuarios.setRowSelectionInterval(fila, fila);
-                        popupMenu.show(e.getComponent(), e.getX(), e.getY());
-                    }
-                }
-            }
-        });
-
-        // Acción de editar
-        menuItemEditar.addActionListener(evt -> {
-            int fila = tbl_Usuarios.getSelectedRow();
-            if (fila != -1) {
-                String correo = (String) tbl_Usuarios.getValueAt(fila, 1); // Cambia el índice si no es la columna
-                Usuario usuario = controller.obtenerUsuarioPorCorreo(correo);
-                if (usuario != null) {
+        PopUpTabla.addPopupMenu(
+                tbl_Usuarios, 
+                1, 
+                controller::obtenerUsuarioPorCorreo,
+                usuario -> {
                     DialogUsuario dialog = new DialogUsuario(null, true, usuario);
                     dialog.setVisible(true);
                     cargarTabla();
-                }
-            }
-        });
-
-        // Acción de eliminar
-        menuItemEliminar.addActionListener(evt -> {
-            int fila = tbl_Usuarios.getSelectedRow();
-            if (fila != -1) {
-                String correo = (String) tbl_Usuarios.getValueAt(fila, 1); // Cambia el índice si no es la columna
-                Usuario usuario = controller.obtenerUsuarioPorCorreo(correo);
-                if (usuario != null) {
-                    // confirmar la eliminación
+                },
+                usuario -> {
                     int confirmacion = JOptionPane.showConfirmDialog(null,
                             "¿Estás seguro de que deseas eliminar al usuario " + usuario.getNombre() + "?",
                             "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-                    if (confirmacion != JOptionPane.YES_OPTION) {
-                        return; // Si el usuario no confirma, no se elimina
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        controller.eliminarUsuario(usuario.getId());
+                        cargarTabla();
                     }
-                    controller.eliminarUsuario(usuario.getId());
-                }
-                ((UsuariosTabla) tbl_Usuarios.getModel()).removeRow(fila);
-            }
-        });
+                }, fila -> ((UsuariosTabla) tbl_Usuarios.getModel()).removeRow(fila), this::cargarTabla);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated

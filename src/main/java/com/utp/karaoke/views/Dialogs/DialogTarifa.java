@@ -15,7 +15,7 @@ public class DialogTarifa extends DialogoSinBordes{
         this.tarifa = tarifa;
         cargarDatos(tarifa);
 
-        EventoUtils.validarNumero(txt_precio);
+        EventoUtils.validarNumeroDecimal(txt_precio);
         EventoUtils.asignarEventoClick(lbl_close, this::dispose);
         EventoUtils.asignarEventoClick(btn_registrar, this::actualizarTarifa);
     }
