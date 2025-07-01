@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import com.utp.karaoke.entities.Sala;
 
 public class SalaTabla extends AbstractTableModel {
-    private String[] columnNames = {"Nombre", "Tipo", "Mesas", "Tarifa", "Estado"};
+    private String[] columnNames = {"Numero", "Tipo", "Capacidad", "Tarifa", "Estado"};
     private List<Sala> data;
 
     public SalaTabla(List<Sala> data) {
@@ -40,5 +40,10 @@ public class SalaTabla extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         return columnNames[column];
+    }
+
+    public void removeRow(int rowIndex) {
+        data.remove(rowIndex);
+        fireTableRowsDeleted(rowIndex, rowIndex);
     }
 }

@@ -1,7 +1,5 @@
 package com.utp.karaoke.views.Panels;
 
-import java.util.Date;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -14,6 +12,8 @@ import com.utp.karaoke.AbstracTablas.SalaTabla;
 import com.utp.karaoke.controllers.BoxesController;
 import com.utp.karaoke.controllers.TarifaController;
 import com.utp.karaoke.utils.EventoUtils;
+import com.utp.karaoke.utils.PopUpTabla;
+import com.utp.karaoke.views.Dialogs.DialogBoxes;
 
 public class PanelBoxes extends javax.swing.JPanel {
 
@@ -22,15 +22,16 @@ public class PanelBoxes extends javax.swing.JPanel {
 
     public PanelBoxes() {
         initComponents();
-        EventoUtils.validarNumeroDecimal(this.txt_precio);
-        EventoUtils.validarNumeroEntero(this.txt_nombre);
+        EventoUtils.validarNumeroEntero(this.txt_personas);
+        EventoUtils.validarNumeroEntero(this.txt_numero);
         addTipoBoxListener();
-        EventoUtils.addNumeroListener(txt_nombre, txt_numeroBox);
+        EventoUtils.addNumeroListener(txt_numero, txt_numeroBox);
         EventoUtils.asignarEventoClick(cbx_tarifa, this::aplicarListaTarifa);
         EventoUtils.asignarEventoClick(btn_agregar, this::registrarBox);
         cargarTabla();
         aplicarPlaceholder();
         aplicarListaTarifa();
+        addPopupMenu();
         this.txt_numeroBox.setText("00");
     }
 
@@ -39,15 +40,39 @@ public class PanelBoxes extends javax.swing.JPanel {
     }
 
     private void aplicarPlaceholder() {
-        EventoUtils.aplicarPlaceholder(this.txt_nombre, "Número");
-        EventoUtils.aplicarPlaceholder(this.txt_precio, "Cantidad");
+        EventoUtils.aplicarPlaceholder(this.txt_numero, "Número");
+        EventoUtils.aplicarPlaceholder(this.txt_personas, "Cantidad");
+    }
+
+    private void addPopupMenu() {
+        PopUpTabla.addPopupMenu(
+                tbl_Usuarios,
+                0,
+                controller::obtenerSalaPorNombre,
+                box -> {
+                    DialogBoxes dialog = new DialogBoxes(null, true, box);
+                    dialog.setVisible(true);
+                    cargarTabla();
+                },
+                box -> {
+                    int confirmacion = JOptionPane.showConfirmDialog(null,
+                            "¿Estás seguro de que deseas eliminar la sala " + box.getNombre() + "?",
+                            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        controller.eliminarSala(box.getId());
+                        cargarTabla();
+                    }
+                },
+                fila -> ((SalaTabla) tbl_Usuarios.getModel()).removeRow(fila),
+                this::cargarTabla
+        );
     }
 
     private void registrarBox() {
         Sala box = new Sala();
-        box.setNombre(this.txt_nombre.getText());
+        box.setNombre(this.txt_numero.getText());
         box.setTipo(TipoBox.values()[cbx_tipo.getSelectedIndex()].name());
-        box.setMesas(Integer.parseInt(this.txt_precio.getText())); // Asignar 0 mesas por defecto
+        box.setMesas(Integer.parseInt(this.txt_personas.getText())); // Asignar 0 mesas por defecto
         box.setTarifa((Tarifa) cbx_tarifa.getSelectedItem());
         box.setEstado(EnumKaraoke.EstadoSala.LIBRE);
         if (controller.registrarSala(box)) {
@@ -160,12 +185,13 @@ public class PanelBoxes extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnl_contenedor = new javax.swing.JPanel();
-        txt_nombre = new javax.swing.JTextField();
-        txt_precio = new javax.swing.JTextField();
+        txt_numero = new javax.swing.JTextField();
+        txt_personas = new javax.swing.JTextField();
         cbx_tipo = new javax.swing.JComboBox<>();
         cbx_tarifa = new javax.swing.JComboBox<>();
         btn_agregar = new javax.swing.JButton();
@@ -182,13 +208,13 @@ public class PanelBoxes extends javax.swing.JPanel {
         pnl_contenedor.setOpaque(false);
         pnl_contenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txt_nombre.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txt_nombre.setBorder(null);
-        pnl_contenedor.add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(652, 39, 100, 36));
+        txt_numero.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txt_numero.setBorder(null);
+        pnl_contenedor.add(txt_numero, new org.netbeans.lib.awtextra.AbsoluteConstraints(652, 39, 100, 36));
 
-        txt_precio.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        txt_precio.setBorder(null);
-        pnl_contenedor.add(txt_precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 200, 100, 36));
+        txt_personas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txt_personas.setBorder(null);
+        pnl_contenedor.add(txt_personas, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 200, 100, 36));
 
         cbx_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BÁSICO", "CLÁSICO", "VIP" }));
         pnl_contenedor.add(cbx_tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(501, 89, 273, 43));
@@ -245,8 +271,8 @@ public class PanelBoxes extends javax.swing.JPanel {
     private javax.swing.JLabel lbl_fondoFormulario;
     private javax.swing.JPanel pnl_contenedor;
     private javax.swing.JTable tbl_Usuarios;
-    private javax.swing.JTextField txt_nombre;
+    private javax.swing.JTextField txt_numero;
     private javax.swing.JLabel txt_numeroBox;
-    private javax.swing.JTextField txt_precio;
+    private javax.swing.JTextField txt_personas;
     // End of variables declaration//GEN-END:variables
 }
