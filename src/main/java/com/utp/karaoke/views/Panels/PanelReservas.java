@@ -1,28 +1,39 @@
 package com.utp.karaoke.views.Panels;
 
+import java.util.List;
+
+import com.utp.karaoke.controllers.BoxesController;
+import com.utp.karaoke.entities.Reserva;
+import com.utp.karaoke.entities.Sala;
 import com.utp.karaoke.views.Cards.CardReserva;
 
-import com.utp.karaoke.utils.EnumKaraoke;
-
 public class PanelReservas extends javax.swing.JPanel {
+    private final BoxesController boxesController =  new BoxesController();
+    private List<Sala> boxes;
 
     public PanelReservas() {
         initComponents();
-        //Ejemplo simple jijijijji
-        CardReserva cr = new CardReserva("01", EnumKaraoke.EstadoReserva.LIBRE);
-        pnl_contenedor.add(cr);
-        CardReserva cr2 = new CardReserva("02", EnumKaraoke.EstadoReserva.OCUPADA);
-        pnl_contenedor.add(cr2);
-        CardReserva cr3 = new CardReserva("03", EnumKaraoke.EstadoReserva.RESERVADO);
-        pnl_contenedor.add(cr3);
-        CardReserva cr4 = new CardReserva("04", EnumKaraoke.EstadoReserva.LIBRE);
-        pnl_contenedor.add(cr4);
-        CardReserva cr5 = new CardReserva("05", EnumKaraoke.EstadoReserva.OCUPADA);
-        pnl_contenedor.add(cr5);
-        CardReserva cr6 = new CardReserva("06", EnumKaraoke.EstadoReserva.RESERVADO);
-        pnl_contenedor.add(cr6);
-        CardReserva cr7 = new CardReserva("07", EnumKaraoke.EstadoReserva.LIBRE);
-        pnl_contenedor.add(cr7);
+        cargarReservas();
+    }
+
+    private void cargarReservas() {
+        boxes = boxesController.obtenerSalas();
+
+        pnl_contenedor.removeAll();
+        for (Sala sala : boxes) {
+            Reserva reserva = boxesController.obtenerReservaPorSala(sala);
+            CardReserva cardReserva = new CardReserva(sala, reserva);
+            pnl_contenedor.add(cardReserva);
+        }
+        pnl_contenedor.revalidate();
+        pnl_contenedor.repaint();
+    }
+
+    /**
+     * Método público para actualizar los datos del panel
+     */
+    public void actualizarDatos() {
+        cargarReservas();
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated

@@ -10,6 +10,7 @@ import com.utp.karaoke.views.Buttons.ButtonsFactory;
 import com.utp.karaoke.views.Buttons.ButtonsFactory.ButtonConfig;
 import com.utp.karaoke.views.Buttons.ButtonsMenu;
 import com.utp.karaoke.views.Panels.PanelBoxes;
+import com.utp.karaoke.views.Panels.PanelClientes;
 import com.utp.karaoke.views.Panels.PanelConfiguracion;
 import com.utp.karaoke.views.Panels.PanelReservas;
 import com.utp.karaoke.views.Panels.PanelTarifas;
@@ -18,6 +19,8 @@ import com.utp.karaoke.views.Panels.PanelUsuario;
 public class MainPanel extends VentanaSinBordes {
 
     private CardLayout cl;
+    private PanelReservas panelReservas;
+    private PanelBoxes panelBoxes;
 
     public MainPanel() {
         initComponents();
@@ -37,23 +40,32 @@ public class MainPanel extends VentanaSinBordes {
     }
 
     private void cargarPaneles(){
-        PanelReservas panelReservas = new PanelReservas();
+        panelReservas = new PanelReservas();
+        panelBoxes = new PanelBoxes();
         PanelTarifas panelTarifas = new PanelTarifas();
-        PanelBoxes panelBoxes = new PanelBoxes();
         PanelUsuario panelUsuario = new PanelUsuario();
         PanelConfiguracion panelConfiguracion = new PanelConfiguracion();
+        PanelClientes panelClientes = new PanelClientes();
 
         pnl_contenedor.add(panelReservas, "Reservas");
         pnl_contenedor.add(panelTarifas, "Tarifas");
         pnl_contenedor.add(panelBoxes, "Boxes");
         pnl_contenedor.add(panelConfiguracion, "Configuracion");
+        pnl_contenedor.add(panelClientes, "Clientes");
         pnl_contenedor.add(panelUsuario, "Usuarios");
 
         List<ButtonConfig> lista = List.of(
-            new ButtonConfig("Reservas", "/images/iconReserva.png", () -> cl.show(pnl_contenedor, "Reservas")),
+            new ButtonConfig("Reservas", "/images/iconReserva.png", () -> {
+                panelReservas.actualizarDatos();
+                cl.show(pnl_contenedor, "Reservas");
+            }),
             new ButtonConfig("Tarifas", "/images/iconTarifa.png", () -> cl.show(pnl_contenedor, "Tarifas")),
-            new ButtonConfig("Boxes", "/images/iconBoxes.png", () -> cl.show(pnl_contenedor, "Boxes")),
+            new ButtonConfig("Boxes", "/images/iconBoxes.png", () -> {
+                cl.show(pnl_contenedor, "Boxes");
+                panelBoxes.actualizarDatos();
+            }),
             new ButtonConfig("Configuracion", "/images/iconConfiguracion.png", () -> cl.show(pnl_contenedor, "Configuracion")),
+            new ButtonConfig("Clientes", "/images/iconClientes.png", () -> cl.show(pnl_contenedor, "Clientes")),
             new ButtonConfig("Usuarios", "/images/iconUsuarios.png", () -> cl.show(pnl_contenedor, "Usuarios"))
         );
 

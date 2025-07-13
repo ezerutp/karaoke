@@ -1,10 +1,12 @@
 package com.utp.karaoke.controllers;
 
-import com.utp.karaoke.entities.Sala;
-import com.utp.karaoke.services.SalasService;
+import java.util.List;
 
 import javax.swing.JOptionPane;
-import java.util.List;
+
+import com.utp.karaoke.entities.Reserva;
+import com.utp.karaoke.entities.Sala;
+import com.utp.karaoke.services.SalasService;
 
 public class BoxesController {
     private SalasService boxesService;
@@ -90,6 +92,10 @@ public class BoxesController {
             }
         }
         return null;
+    }
+
+    public Reserva obtenerReservaPorSala(Sala sala) {
+        return boxesService.obtenerReservaPorSala(sala);
     }
 
     public boolean eliminarSala(int id) {

@@ -6,11 +6,11 @@ import javax.swing.table.AbstractTableModel;
 
 import com.utp.karaoke.entities.Cliente;
 
-public class CienteTabla extends AbstractTableModel {
-    private String[] columnNames = {"Nombre", "Correo", "Teléfono"};
+public class ClienteTabla extends AbstractTableModel {
+    private String[] columnNames = {"Nombre", "Correo", "Teléfono", "DNI"};
     private List<Cliente> data;
 
-    public CienteTabla(List<Cliente> data) {
+    public ClienteTabla(List<Cliente> data) {
         this.data = data;
     }
 
@@ -31,6 +31,7 @@ public class CienteTabla extends AbstractTableModel {
             case 0: return cliente.getNombre();
             case 1: return cliente.getCorreo();
             case 2: return cliente.getTelefono();
+            case 3: return cliente.getDni();
             default: return null;
         }
     }
@@ -38,5 +39,12 @@ public class CienteTabla extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         return columnNames[column];
+    }
+
+    public void removeRow(int rowIndex) {
+        if (rowIndex >= 0 && rowIndex < data.size()) {
+            data.remove(rowIndex);
+            fireTableRowsDeleted(rowIndex, rowIndex);
+        }
     }
 }

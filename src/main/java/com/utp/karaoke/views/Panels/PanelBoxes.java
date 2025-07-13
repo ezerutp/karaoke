@@ -26,13 +26,17 @@ public class PanelBoxes extends javax.swing.JPanel {
         EventoUtils.validarNumeroEntero(this.txt_numero);
         addTipoBoxListener();
         EventoUtils.addNumeroListener(txt_numero, txt_numeroBox);
-        EventoUtils.asignarEventoClick(cbx_tarifa, this::aplicarListaTarifa);
         EventoUtils.asignarEventoClick(btn_agregar, this::registrarBox);
         cargarTabla();
         aplicarPlaceholder();
         aplicarListaTarifa();
         addPopupMenu();
         this.txt_numeroBox.setText("00");
+    }
+
+    public void actualizarDatos() {
+        cargarTabla();
+        aplicarListaTarifa();
     }
 
     private void aplicarListaTarifa() {
@@ -111,74 +115,6 @@ public class PanelBoxes extends javax.swing.JPanel {
     private void cargarTabla() {
         tbl_Usuarios.setModel(new SalaTabla(controller.obtenerSalas()));
     }
-
-    /*
-     * private void addPopupMenu() {
-     * popupMenu = new JPopupMenu();
-     * menuItemEditar = new JMenuItem("Editar");
-     * menuItemEliminar = new JMenuItem("Eliminar");
-     * popupMenu.add(menuItemEditar);
-     * popupMenu.add(menuItemEliminar);
-     * 
-     * // Agregar el listener a la tabla
-     * tbl_Usuarios.addMouseListener(new MouseAdapter() {
-     * 
-     * @Override
-     * public void mousePressed(MouseEvent e) {
-     * mostrarMenu(e);
-     * }
-     * 
-     * @Override
-     * public void mouseReleased(MouseEvent e) {
-     * mostrarMenu(e);
-     * }
-     * 
-     * private void mostrarMenu(MouseEvent e) {
-     * if (e.isPopupTrigger()) {
-     * int fila = tbl_Usuarios.rowAtPoint(e.getPoint());
-     * if (fila >= 0 && fila < tbl_Usuarios.getRowCount()) {
-     * tbl_Usuarios.setRowSelectionInterval(fila, fila);
-     * popupMenu.show(e.getComponent(), e.getX(), e.getY());
-     * }
-     * }
-     * }
-     * });
-     * 
-     * // Acción de editar
-     * menuItemEditar.addActionListener(evt -> {
-     * int fila = tbl_Usuarios.getSelectedRow();
-     * if (fila != -1) {
-     * String nombre = (String) tbl_Usuarios.getValueAt(fila, 0);
-     * Tarifa tarifa = controller.obtenerTarifaPorNombre(nombre);
-     * if (tarifa != null) {
-     * DialogTarifa dialog = new DialogTarifa(null, true, tarifa);
-     * dialog.setVisible(true);
-     * cargarTabla();
-     * }
-     * }
-     * });
-     * 
-     * // Acción de eliminar
-     * menuItemEliminar.addActionListener(evt -> {
-     * int fila = tbl_Usuarios.getSelectedRow();
-     * if (fila != -1) {
-     * String nombre = (String) tbl_Usuarios.getValueAt(fila, 0);
-     * Tarifa tarifa = controller.obtenerTarifaPorNombre(nombre);
-     * if (tarifa != null) {
-     * // confirmar la eliminación
-     * int confirmacion = JOptionPane.showConfirmDialog(null,
-     * "¿Estás seguro de que deseas eliminar la tarifa " + tarifa.getNombre() + "?",
-     * "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-     * if (confirmacion != JOptionPane.YES_OPTION) {
-     * return; // Si el usuario no confirma, no se elimina
-     * }
-     * controller.eliminarTarifa(tarifa.getId());
-     * }
-     * ((TarifaTabla) tbl_Usuarios.getModel()).removeRow(fila);
-     * }
-     * });
-     * }
-     */
 
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated

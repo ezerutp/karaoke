@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.utp.karaoke.config.DbConexion;
+import com.utp.karaoke.entities.Reserva;
 import com.utp.karaoke.entities.Sala;
 import com.utp.karaoke.entities.Tarifa;
 import com.utp.karaoke.interfaces.Repository;
+import com.utp.karaoke.services.ClienteService;
+import com.utp.karaoke.services.SalasService;
 import com.utp.karaoke.services.TarifasService;
+import com.utp.karaoke.services.UsuarioService;
+import com.utp.karaoke.utils.EnumKaraoke.EstadoReserva;
 import com.utp.karaoke.utils.EnumKaraoke.EstadoSala;
 
 public class SalasRepository implements Repository<Integer, Sala> {
@@ -58,7 +63,7 @@ public class SalasRepository implements Repository<Integer, Sala> {
         String sql = "SELECT * FROM " + TABLE_NAME;
         List<Sala> salasList = new ArrayList<>();
         try (Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(sql)) {
+                ResultSet rs = statement.executeQuery(sql)) {
             while (rs.next()) {
                 salasList.add(mapSala(rs));
             }
@@ -70,7 +75,8 @@ public class SalasRepository implements Repository<Integer, Sala> {
 
     @Override
     public boolean actualizar(Sala sala) {
-        String sql = "UPDATE " + TABLE_NAME + " SET nombre = ?, tipo = ?, mesas = ?, id_tarifa = ?, estado = ? WHERE id = ?";
+        String sql = "UPDATE " + TABLE_NAME
+                + " SET nombre = ?, tipo = ?, mesas = ?, id_tarifa = ?, estado = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, sala.getNombre());
             ps.setString(2, sala.getTipo());
@@ -95,6 +101,28 @@ public class SalasRepository implements Repository<Integer, Sala> {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Reserva buscarReservaPorSalaId(Integer salaId) {
+        String sql = "SELECT * FROM reserva WHERE id_sala = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, salaId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Reserva reserva = new Reserva();
+                reserva.setId(rs.getInt("id"));
+                reserva.setCliente(new ClienteService().obtenerClientePorId(rs.getInt("id_cliente")));
+                reserva.setSala(new SalasService().obtenerSalaPorId(rs.getInt("id_sala")));
+                reserva.setUsuario(new UsuarioService().obtenerUsuarioPorId(rs.getInt("id_usuario")));
+                reserva.setFecha(rs.getTimestamp("fecha"));
+                reserva.setTotal(rs.getDouble("total"));
+                reserva.setEstado(EstadoReserva.valueOf(rs.getString("estado").toUpperCase()));
+                return reserva;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private Sala mapSala(ResultSet rs) throws Exception {

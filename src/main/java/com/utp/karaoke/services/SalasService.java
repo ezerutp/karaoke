@@ -2,6 +2,7 @@ package com.utp.karaoke.services;
 
 import java.util.List;
 
+import com.utp.karaoke.entities.Reserva;
 import com.utp.karaoke.entities.Sala;
 import com.utp.karaoke.repositories.SalasRepository;
 
@@ -22,6 +23,10 @@ public class SalasService {
 
     public List<Sala> obtenerTodasSalas() {
         return salasRepository.listarTodos();
+    }
+
+    public Reserva obtenerReservaPorSala(Sala sala) {
+        return salasRepository.buscarReservaPorSalaId(sala.getId());
     }
 
     public boolean actualizarSala(Sala sala) {

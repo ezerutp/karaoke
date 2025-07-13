@@ -15,12 +15,12 @@ public class Reserva {
 
     public Reserva() {}
 
-    public Reserva(int id, Cliente cliente, Sala sala, Usuario usuariosuario, Date fecha, double total, EstadoReserva estado) {
+    public Reserva(int id, Cliente cliente, Sala sala, Usuario usuariosuario, double total, EstadoReserva estado) {
         this.id = id;
         this.cliente = cliente;
         this.sala = sala;
         this.usuariosuario = usuariosuario;
-        this.fecha = fecha;
+        this.fecha = new Date();
         this.total = total;
         this.estado = estado;
     }

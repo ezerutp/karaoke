@@ -1,0 +1,19 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\main",
+    "\\src\\main\\java",
+    "\\src\\main\\java\\com",
+    "\\src\\main\\java\\com\\utp",
+    "\\src\\main\\java\\com\\utp\\karaoke",
+    "\\src\\main\\java\\com\\utp\\karaoke\\views",
+    "\\target\\classes",
+    "\\target\\classes\\com",
+    "\\target\\classes\\com\\utp",
+    "\\target\\classes\\com\\utp\\karaoke",
+    "\\target\\classes\\com\\utp\\karaoke\\repositories"
+  ],
+  "SelectedNode": "\\src\\main\\java\\com\\utp\\karaoke\\views\\MainPanel.java",
+  "PreviewInSolutionExplorer": false
+}
