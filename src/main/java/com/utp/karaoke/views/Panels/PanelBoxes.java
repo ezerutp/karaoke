@@ -67,16 +67,25 @@ public class PanelBoxes extends javax.swing.JPanel {
                         cargarTabla();
                     }
                 },
-                fila -> ((SalaTabla) tbl_Usuarios.getModel()).removeRow(fila),
-                this::cargarTabla
-        );
+                fila -> ((SalaTabla) tbl_Usuarios.getModel()).removeRow(fila), this::cargarTabla);
     }
 
     private void registrarBox() {
         Sala box = new Sala();
         box.setNombre(this.txt_numero.getText());
         box.setTipo(TipoBox.values()[cbx_tipo.getSelectedIndex()].name());
-        box.setMesas(Integer.parseInt(this.txt_personas.getText())); // Asignar 0 mesas por defecto
+        int personas;
+        try {
+            personas = Integer.parseInt(this.txt_personas.getText());
+            if (personas <= 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad de personas debe ser mayor a 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido para la cantidad de personas.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        box.setMesas(personas);
         box.setTarifa((Tarifa) cbx_tarifa.getSelectedItem());
         box.setEstado(EnumKaraoke.EstadoSala.LIBRE);
         if (controller.registrarSala(box)) {

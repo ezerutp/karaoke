@@ -15,6 +15,7 @@ public class CardReserva extends javax.swing.JPanel {
     private Reserva reserva;
     private Sala box;
     private Timer timerReserva;
+    private int minutosReservaRestante = 0;
 
     public CardReserva(Sala box, Reserva reserva) {
         this.box = box;
@@ -43,7 +44,7 @@ public class CardReserva extends javax.swing.JPanel {
                 break;
             case RESERVADO:
                 lbl_background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/figmaReservaReservado.png"))); 
-                btn_accion.setText("RESERVADO");
+                btn_accion.setText("TERMINADO!");
                 break;
             default:
                 break;
@@ -51,11 +52,12 @@ public class CardReserva extends javax.swing.JPanel {
     }
 
     private void mostrarInformacion() {
-        String mensaje = String.format("Box: %s\nEstado: %s\nCliente: %s\nTiempo: %.2f minutos\nUsuario encargado: %s",
+        String mensaje = String.format("Box: %s\nEstado: %s\nCliente: %s\nTiempo: %d/%d minutos\nUsuario encargado: %s",
                 box.getNombre(),
                 reserva != null ? reserva.getEstado().toString() : "LIBRE",
                 reserva != null && reserva.getCliente() != null ? reserva.getCliente().getNombre() : "N/A",
-                reserva != null ? reserva.getTotal() : 0.0,
+                minutosReservaRestante,
+                reserva != null ? ((int) reserva.getTotal()) : 0,
                 reserva != null ? reserva.getUsuario().getNombre() : "N/A");
         JOptionPane.showMessageDialog(this, mensaje, "Información de Reserva", JOptionPane.INFORMATION_MESSAGE);
     }   
@@ -65,22 +67,27 @@ public class CardReserva extends javax.swing.JPanel {
         if (timerReserva != null && timerReserva.isRunning()) {
             timerReserva.stop();
         }
-        
-        int delay = (int)(minutos * 60 * 1000); // minutos a milisegundos
+
+        minutosReservaRestante = (int) minutos;
+        int delay = 60 * 1000; // 1 minuto en milisegundos
+
         timerReserva = new javax.swing.Timer(delay, e -> {
-            JOptionPane.showMessageDialog(
-                this,
-                "¡El tiempo de la reserva ha terminado!",
-                "Reserva finalizada",
-                JOptionPane.INFORMATION_MESSAGE
-            );
-            // Limpiar la referencia del timer al finalizar
-            timerReserva = null;
-            reservaController.cancelarReserva(reserva.getId());
-            reserva = null;
-            loadData();
+            minutosReservaRestante--;
+            if (minutosReservaRestante <= 0) {
+                timerReserva.stop();
+                timerReserva = null;
+                JOptionPane.showMessageDialog(
+                    this,
+                    "¡El tiempo de la reserva ha terminado!",
+                    "Reserva finalizada",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                btn_accion.setText("TERMINADO!");
+            } else {
+                loadData(); // Actualiza la UI con el tiempo restante
+            }
         });
-        timerReserva.setRepeats(false);
+        timerReserva.setRepeats(true);
         timerReserva.start();
     }
 

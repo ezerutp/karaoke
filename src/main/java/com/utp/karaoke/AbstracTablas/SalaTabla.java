@@ -43,7 +43,9 @@ public class SalaTabla extends AbstractTableModel {
     }
 
     public void removeRow(int rowIndex) {
-        data.remove(rowIndex);
-        fireTableRowsDeleted(rowIndex, rowIndex);
+        if (rowIndex >= 0 && rowIndex < data.size()) {
+            data.remove(rowIndex);
+            fireTableRowsDeleted(rowIndex, rowIndex);
+        }
     }
 }

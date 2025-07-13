@@ -12,20 +12,24 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class PopUpTabla {
-    
+
     /**
      * Método para agregar un menú emergente a una tabla.
      *
-     * @param tabla          La tabla a la que se le agregará el menú emergente.
-     * @param columna        La columna que se utilizará para buscar el objeto a editar o eliminar.
-     * @param find           Función para encontrar el objeto basado en el valor de la celda.
-     * @param editar         Consumidor para editar el objeto encontrado.
-     * @param eliminar       Consumidor para eliminar el objeto encontrado.
-     * @param eliminarFila   Consumidor para eliminar la fila de la tabla.
-     * @param cargarTabla    Runnable para recargar la tabla después de editar o eliminar.
-     * @param <T>            Tipo del objeto que se va a editar o eliminar.
+     * @param tabla        La tabla a la que se le agregará el menú emergente.
+     * @param columna      La columna que se utilizará para buscar el objeto a
+     *                     editar o eliminar.
+     * @param find         Función para encontrar el objeto basado en el valor de la
+     *                     celda.
+     * @param editar       Consumidor para editar el objeto encontrado.
+     * @param eliminar     Consumidor para eliminar el objeto encontrado.
+     * @param eliminarFila Consumidor para eliminar la fila de la tabla.
+     * @param cargarTabla  Runnable para recargar la tabla después de editar o
+     *                     eliminar.
+     * @param <T>          Tipo del objeto que se va a editar o eliminar.
      */
-    public static <T> void addPopupMenu(JTable tabla, int columna, Function<String, T> find, Consumer<T> editar, Consumer<T> eliminar, Consumer<Integer> eliminarFila, Runnable cargarTabla) {
+    public static <T> void addPopupMenu(JTable tabla, int columna, Function<String, T> find, Consumer<T> editar,
+            Consumer<T> eliminar, Consumer<Integer> eliminarFila, Runnable cargarTabla) {
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem menuItemEditar = new JMenuItem("Editar");
@@ -76,15 +80,8 @@ public class PopUpTabla {
                 String valor = (String) tabla.getValueAt(fila, columna);
                 T entidad = find.apply(valor);
                 if (entidad != null) {
-                    int ok = JOptionPane.showConfirmDialog(
-                            null,
-                            "¿Seguro que deseas eliminar este registro?",
-                            "Confirmar eliminación",
-                            JOptionPane.YES_NO_OPTION);
-                    if (ok == JOptionPane.YES_OPTION) {
-                        eliminar.accept(entidad);
-                        eliminarFila.accept(fila);
-                    }
+                    eliminar.accept(entidad);
+                    eliminarFila.accept(fila);
                 }
             }
         });

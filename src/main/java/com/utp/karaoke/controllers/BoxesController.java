@@ -57,7 +57,7 @@ public class BoxesController {
             JOptionPane.showMessageDialog(null, "El tipo no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (sala.getMesas() <= 0) {
+        if (sala.getMesas() < 0) {
             JOptionPane.showMessageDialog(null, "La cantidad de mesas debe ser mayor a 0.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
