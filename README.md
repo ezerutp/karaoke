@@ -1,4 +1,7 @@
 # Karaoke - Sistema de Gestión de Boxes y Alquiler
+> **Nota:** Este proyecto fue desarrollado como parte de una asignatura universitaria en la **Universidad Tecnológica del Perú (UTP)** y ya se encuentra finalizado. Sin embargo, puede ser mejorado en aspectos como la estructura de la base de datos y la lógica general de la aplicación.
+
+![Archived](https://img.shields.io/badge/project-archived-lightgrey?style=flat-square)
 
 Esta aplicación está diseñada para la **gestión integral de un karaoke**, permitiendo administrar los boxes, usuarios administrativos y tarifas, así como gestionar el alquiler de los boxes de manera eficiente.
 
@@ -21,9 +24,9 @@ Esta aplicación está diseñada para la **gestión integral de un karaoke**, pe
   - Control de horarios y duración del uso de cada box.
   - Registro de historial de alquileres.
 
-- **Reportes y Estadísticas:**
-  - Generación de reportes de ocupación, ingresos y actividad de los boxes.
-  - Visualizaciones para la toma de decisiones administrativas.
+- **Gestión de Clientes**
+- Registro y administración de clientes.
+- Asignación de reservas
 
 ## Tecnologías utilizadas
 
